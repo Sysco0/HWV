@@ -3,7 +3,7 @@ package hawlandshut.projekt.hwv;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
+/*
 public class HWVerwaltungDbHelper extends SQLiteOpenHelper{
 
     private static HWVerwaltungDbHelper sInstance = null;
@@ -55,3 +55,4 @@ public class HWVerwaltungDbHelper extends SQLiteOpenHelper{
 
 
 }
+*/

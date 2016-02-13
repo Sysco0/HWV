@@ -1,6 +1,7 @@
 package hawlandshut.projekt.hwv;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -8,9 +9,13 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -20,22 +25,24 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 
-public class MainActivity extends AppCompatActivity implements AsyncResponse{
+public class MainActivity extends AppCompatActivity implements AsyncResponse, AdapterView.OnItemClickListener{
 
     JSONDataUpdater jsonDataUpdater = new JSONDataUpdater();
     ListView AuftragList;
     SharedPreferences sharedPref;
+    Context mainContext;
 
       @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+          mainContext = this;
+          super.onCreate(savedInstanceState);
           setContentView(R.layout.activity_active_job);
           sharedPref = getSharedPreferences(
                   "hawlandshut.projekt.hwv", Context.MODE_PRIVATE);
 
 
           AuftragList = (ListView)findViewById(R.id.listViewAuftrag);
-          ListAdapterAuftrag myListAdapterAuftrag = new ListAdapterAuftrag(getApplicationContext());
+          ListAdapterAuftrag myListAdapterAuftrag = new ListAdapterAuftrag(getApplicationContext(),this);
 
           Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
           setSupportActionBar(myToolbar);
@@ -43,10 +50,16 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse{
           jsonDataUpdater.delegate = this;
           jsonDataUpdater.execute();
 
-        ActionBar myBar = getSupportActionBar();
-        myBar.setTitle("Mögliche Aufträge");
+          ActionBar myBar = getSupportActionBar();
+          if(myBar != null){
+              myBar.setTitle("Auftragsliste");
+          }
 
-        AuftragList.setAdapter(myListAdapterAuftrag);
+          AuftragList.setAdapter(myListAdapterAuftrag);
+          AuftragList.setOnItemClickListener(this);
+
+
+
 
     }
 
@@ -78,6 +91,38 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse{
         ListAdapterAuftrag adapter = (ListAdapterAuftrag)AuftragList.getAdapter();
         adapter.updateData();
         adapter.notifyDataSetChanged();
+        //Choose item 1
+
+        if(adapter.getCount() != 0)
+        {
+            AuftragList.performItemClick(AuftragList.getChildAt(0),0,AuftragList.getFirstVisiblePosition());
+        }
+
+
+        //May cause a Problem if no Jobs are available
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        //Do smthg.
+        ((ListAdapterAuftrag) parent.getAdapter()).setSelectedItem(position);
+        ((ListAdapterAuftrag) parent.getAdapter()).notifyDataSetChanged();
+
+        Auftrag activeJob = (Auftrag) parent.getAdapter().getItem(position);
+        TextView anrede = (TextView)findViewById(R.id.showJob_Anrede_textView);
+        anrede.setText(activeJob.getKunde().getAnrede());
+        TextView nname = (TextView)findViewById(R.id.showJob_Nachname_textView);
+        nname.setText(activeJob.getKunde().getName());
+        TextView vname = (TextView)findViewById(R.id.showJob_Vorname_textView);
+        vname.setText(activeJob.getKunde().getVorname());
+        TextView plzOrt = (TextView)findViewById(R.id.showJob_Plz_Ort_textView);
+        plzOrt.setText(activeJob.getKunde().getPlz() + " " + activeJob.getKunde().getOrt()); //evtl unschön
+        TextView strasse = (TextView)findViewById(R.id.showJob_Strasse_textView);
+        strasse.setText(activeJob.getKunde().getAdresse());
+        TextView zone = (TextView)findViewById(R.id.showJob_Zone_textView);
+        zone.setText("Zone" + activeJob.getKunde().getZone());//dito
+
+
     }
 
     public class JSONDataUpdater extends AsyncTask<String, String, String> {
@@ -91,7 +136,7 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse{
             StringBuilder result = new StringBuilder();
 
             try {
-                URL url = new URL("http://api.androidhive.info/contacts/");
+                URL url = new URL("http://www.wasserwacht-eggenfelden.de/docs/test.txt");
                 urlConnection = (HttpURLConnection) url.openConnection();
                 InputStream in = new BufferedInputStream(urlConnection.getInputStream());
 
@@ -119,6 +164,8 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse{
             editor.putString("jobdata", result);
             editor.apply();
             //Do something with the JSON string
+
+
 
             delegate.processFinish(result);
 

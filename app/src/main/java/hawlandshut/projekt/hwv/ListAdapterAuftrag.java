@@ -1,8 +1,10 @@
 package hawlandshut.projekt.hwv;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.DataSetObserver;
+import android.graphics.Color;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,15 +24,18 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.prefs.PreferenceChangeEvent;
 
-public class ListAdapterAuftrag extends BaseAdapter implements AdapterView.OnItemClickListener{
+public class ListAdapterAuftrag extends BaseAdapter{
 
     private ArrayList<Auftrag> auftragsliste;
     private final Context ctx;
+    private final Activity mainActivity;
     private final LayoutInflater mInflater;
+    private int selected;
     private SharedPreferences prefs;
 
-    public ListAdapterAuftrag(Context context) {
+    public ListAdapterAuftrag(Context context, Activity act) {
         ctx = context;
+        mainActivity = act;
         mInflater = LayoutInflater.from(ctx);
         prefs = ctx.getSharedPreferences("hawlandshut.projekt.hwv",Context.MODE_PRIVATE);
         initAuftragsListe();
@@ -47,9 +52,12 @@ public class ListAdapterAuftrag extends BaseAdapter implements AdapterView.OnIte
             //Extract Array of Entrys
             JSONArray contacts = jsonRootObj.getJSONArray("contacts");
 
+
             for( int i = 0; i < contacts.length(); i++){
                 JSONObject c = contacts.getJSONObject(i);
-                auftragsliste.add(new Auftrag(i, c.getString("name"),"",c.getString("email"),new Date(),new Date()));
+
+                Kunde testKunde = new Kunde(c.getString("name"));
+                auftragsliste.add(new Auftrag(i, testKunde, "test", new Date(2010, 10, 10), new Date(2010, 10, 10)));
             }
 
         } catch (JSONException e) {
@@ -59,14 +67,6 @@ public class ListAdapterAuftrag extends BaseAdapter implements AdapterView.OnIte
 
     private void initAuftragsListe(){
         updateData();
-
-        /*
-        auftragsliste.add(new Auftrag(2, "Gruber", "Jeppo", "Hagl hi macha", new Date(), new Date()));
-        auftragsliste.add(new Auftrag(3, "Hackl", "Schorsch", "Heizung einbauen", new Date(), new Date()));
-        auftragsliste.add(new Auftrag(4, "Meier", "Hans", "Rohrbruch", new Date(), new Date()));
-        auftragsliste.add(new Auftrag(5, "Müller", "August", "Woas da Henker", new Date(), new Date()));
-        auftragsliste.add(new Auftrag(6, "Sandler", "Dandler", "Alles Kalt", new Date(), new Date()));
-        */
     }
 
 
@@ -89,19 +89,30 @@ public class ListAdapterAuftrag extends BaseAdapter implements AdapterView.OnIte
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         final View v = mInflater.inflate(R.layout.auftrag_row,parent,false);
-        TextView nachn = (TextView)v.findViewById(R.id.nachname);
-        TextView vorn = (TextView)v.findViewById(R.id.vorname);
+        TextView nachn = (TextView)v.findViewById(R.id.AuftragRow_nachname_textView);
+        TextView vorn = (TextView)v.findViewById(R.id.AuftragRow_vorname_textView);
+        TextView status = (TextView)v.findViewById(R.id.AuftragRow_status_textView);
         TextView besch = (TextView)v.findViewById(R.id.beschreibung);
 
-        nachn.setText(auftragsliste.get(position).getName());
-        vorn.setText(auftragsliste.get(position).getVorname());
+
+        nachn.setText(auftragsliste.get(position).getKunde().getName());
+        vorn.setText(auftragsliste.get(position).getKunde().getVorname());
+        String statusText = "Status: "+ auftragsliste.get(position).getAuftrStat();
+        status.setText(statusText);
+
         besch.setText(auftragsliste.get(position).getBeschreibung());
+
+        if(selected == position)
+        {
+            v.setBackgroundColor(Color.GRAY);
+        }
 
         return v;
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        //Do smthg.
+    public void setSelectedItem(int position)
+    {
+        selected = position;
     }
+
 }

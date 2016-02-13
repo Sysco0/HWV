@@ -5,7 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-
+/*
 public class DBAdapter {
 // Context of application who uses us.
     private static DBAdapter sInstance = null;
@@ -48,10 +48,10 @@ public class DBAdapter {
     public void close() {
         myDBHelper.close();
     }
-    /**************************************END General**************************************************/
+    /**************************************END General**************************************************
 
 
-    /*************************************     AuftragDaten     *******************************************/
+    /*************************************     AuftragDaten     *******************************************
     // Add a new set of values to the database.
     public long insertAuftragDatenRow(String name, int quali, String posi) {
         // Create row's data:
@@ -118,3 +118,4 @@ public class DBAdapter {
     }
 
 }
+*/

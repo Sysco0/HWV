@@ -1,7 +1,7 @@
 package hawlandshut.projekt.hwv;
 
 import android.provider.BaseColumns;
-
+/*
 public final class AuftragDatenContract {
     public AuftragDatenContract(){}
 
@@ -18,3 +18,4 @@ public final class AuftragDatenContract {
                 COLUMN_NAME_POSITION };
     }
 }
+*/

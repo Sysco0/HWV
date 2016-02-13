@@ -25,6 +25,7 @@
             android:layout_width="0dp"
             android:layout_weight=".40"
             android:layout_height="wrap_content"
+            android:clickable="true"
             android:id="@+id/listViewAuftrag">
         </ListView>
 
@@ -32,19 +33,34 @@
             android:layout_weight=".60"
             android:layout_width="0dp"
             android:layout_margin="10dp"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
             <TableRow android:padding="5dp">
                 <TextView
                     android:padding="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="AuftragTagName"
+                    android:text="Kunde:"
                     />
                 <TextView
                     android:padding="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="AuftragDataName"
+                    android:id="@+id/showJob_Anrede_textView"
+                    android:text="ANREDE"
+                    />
+                <TextView
+                    android:padding="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/showJob_Nachname_textView"
+                    android:text="NACHNAME"
+                    />
+                <TextView
+                    android:padding="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/showJob_Vorname_textView"
+                    android:text="VORNAME"
                     />
             </TableRow>
             <TableRow android:padding="5dp">
@@ -52,40 +68,44 @@
                     android:padding="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="AuftragTagName"
+                    android:text="Adresse:"
                     />
                 <TextView
                     android:padding="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="AuftragDataName"
+                    android:id="@+id/showJob_Plz_Ort_textView"
+                    android:text="PLZ ORT"
                     />
+
             </TableRow>
             <TableRow android:padding="5dp">
                 <TextView
                     android:padding="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="AuftragTagName"
+                    android:text=""
                     />
                 <TextView
                     android:padding="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="AuftragDataName"
+                    android:id="@+id/showJob_Strasse_textView"
+                    android:text="STRASSE"
                     />
             </TableRow><TableRow android:padding="5dp">
             <TextView
                 android:padding="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="AuftragTagName"
+                android:text=""
                 />
             <TextView
                 android:padding="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="AuftragDataName"
+                android:id="@+id/showJob_Zone_textView"
+                android:text="ZONE"
                 />
         </TableRow>
         </TableLayout>
