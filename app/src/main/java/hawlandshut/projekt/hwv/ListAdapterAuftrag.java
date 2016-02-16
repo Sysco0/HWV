@@ -50,14 +50,24 @@ public class ListAdapterAuftrag extends BaseAdapter{
             JSONObject jsonRootObj = new JSONObject(jsonStr);
 
             //Extract Array of Entrys
-            JSONArray contacts = jsonRootObj.getJSONArray("contacts");
+            JSONArray jobs = jsonRootObj.getJSONArray("jobs");
+
+            for( int i = 0; i < jobs.length(); i++){
+                JSONObject j = jobs.getJSONObject(i);
 
 
-            for( int i = 0; i < contacts.length(); i++){
-                JSONObject c = contacts.getJSONObject(i);
+                //Erstelle Kunde //TODO: Zu Set ändern - keine duplikate
+                JSONObject k = j.getJSONObject("Kunde");
+                Kunde testKunde =
+                        new Kunde(k.getInt("kdNr"), k.getString("anrede"),
+                        k.getString("name"), k.getString("vorname"), k.getString("adresse"),
+                        k.getInt("plz"), k.getString("ort"), k.getInt("zone"));
 
-                Kunde testKunde = new Kunde(c.getString("name"));
-                auftragsliste.add(new Auftrag(i, testKunde, "test", new Date(2010, 10, 10), new Date(2010, 10, 10)));
+                //Schreibe neuen Auftrag
+                auftragsliste.add(
+                        new Auftrag(j.getLong("id"), j.getInt("auftragNr"), j.getInt("status"),
+                                j.getString("beschreibung"), testKunde, new Date()));
+
             }
 
         } catch (JSONException e) {

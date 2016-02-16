@@ -94,12 +94,10 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse, Ad
         //Choose item 1
 
         if(adapter.getCount() != 0)
-        {
+        {//May cause a Problem if no Jobs are available
             AuftragList.performItemClick(AuftragList.getChildAt(0),0,AuftragList.getFirstVisiblePosition());
         }
 
-
-        //May cause a Problem if no Jobs are available
     }
 
     @Override

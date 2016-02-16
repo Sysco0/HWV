@@ -20,16 +20,14 @@ public class Auftrag {
     private Date start;
 
 
-    public Auftrag(long _id, Kunde _kunde, String _beschreibung, Date _empfang, Date _start){
+    public Auftrag(long _id, int _auftrNr, int _auftrStat, String _beschreibung, Kunde _kunde, Date _empfang){
         id = _id;
+        auftrNr = _auftrNr;
+        auftrStat = _auftrStat;
         beschreibung = _beschreibung;
         kunde = _kunde;
         empfang = _empfang;
-        start = _start;
-        auftrStat = 1; //TODO: Static for now, change?
     }
-
-
 
     public String getBeschreibung() {
         return beschreibung;

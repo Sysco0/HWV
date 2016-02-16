@@ -13,19 +13,16 @@ public class Kunde {
     private String ort;
     private int zone;
 
-    public Kunde(int _kdNr){
+    public Kunde(int _kdNr, String _anrede, String _name,
+                 String _vorname, String _adresse, int _plz, String _ort, int _zone){
         kdNr = _kdNr;
-    }
-
-    public Kunde(String _name){
-        kdNr = 1000001;
-        anrede = "Herr";
+        anrede = _anrede;
         name = _name;
-        vorname = "Max";
-        adresse = "Auf dem Holzweg 3";
-        plz = 1337;
-        ort = "Leethausen";
-        zone = 2;
+        vorname = _vorname;
+        adresse = _adresse;
+        plz = _plz;
+        ort = _ort;
+        zone = _zone;
     }
 
     public String getVorname() {
