@@ -1,7 +1,6 @@
 package hawlandshut.projekt.hwv;
 
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -9,7 +8,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.text.method.ScrollingMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -119,6 +118,9 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse, Ad
         strasse.setText(activeJob.getKunde().getAdresse());
         TextView zone = (TextView)findViewById(R.id.showJob_Zone_textView);
         zone.setText("Zone" + activeJob.getKunde().getZone());//dito
+        TextView beschr = (TextView)findViewById(R.id.showJob_Beschreibung_textView);
+        beschr.setText(activeJob.getBeschreibung());
+        beschr.setMovementMethod(new ScrollingMovementMethod());
 
 
     }
@@ -134,7 +136,7 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse, Ad
             StringBuilder result = new StringBuilder();
 
             try {
-                URL url = new URL("http://www.wasserwacht-eggenfelden.de/docs/test.txt");
+                URL url = new URL("http://www.wasserwacht-eggenfelden.de/docs/test.json");
                 urlConnection = (HttpURLConnection) url.openConnection();
                 InputStream in = new BufferedInputStream(urlConnection.getInputStream());
 

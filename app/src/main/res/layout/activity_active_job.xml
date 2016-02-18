@@ -28,87 +28,148 @@
             android:clickable="true"
             android:id="@+id/listViewAuftrag">
         </ListView>
-
-        <TableLayout
-            android:layout_weight=".60"
+        <RelativeLayout
             android:layout_width="0dp"
-            android:layout_margin="10dp"
+            android:layout_weight=".60"
             android:layout_height="match_parent">
-            <TableRow android:padding="5dp">
-                <TextView
-                    android:padding="5dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Kunde:"
-                    />
-                <TextView
-                    android:padding="5dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/showJob_Anrede_textView"
-                    android:text="ANREDE"
-                    />
-                <TextView
-                    android:padding="5dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/showJob_Nachname_textView"
-                    android:text="NACHNAME"
-                    />
-                <TextView
-                    android:padding="5dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/showJob_Vorname_textView"
-                    android:text="VORNAME"
-                    />
-            </TableRow>
-            <TableRow android:padding="5dp">
-                <TextView
-                    android:padding="5dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Adresse:"
-                    />
-                <TextView
-                    android:padding="5dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/showJob_Plz_Ort_textView"
-                    android:text="PLZ ORT"
-                    />
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_margin="10dp"
+                android:layout_height="wrap_content">
+                    <TableRow android:padding="5dp">
+                        <TextView
+                            android:padding="5dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Kunde:"
+                            />
+                        <TextView
+                            android:padding="5dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/showJob_Anrede_textView"
+                            android:text="ANREDE"
+                            />
+                        <TextView
+                            android:padding="5dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/showJob_Nachname_textView"
+                            android:text="NACHNAME"
+                            />
+                        <TextView
+                            android:padding="5dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/showJob_Vorname_textView"
+                            android:text="VORNAME"
+                            />
+                    </TableRow>
+                    <TableRow android:padding="5dp">
+                        <TextView
+                            android:padding="5dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Adresse:"
+                            />
+                        <TextView
+                            android:padding="5dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/showJob_Plz_Ort_textView"
+                            android:text="PLZ ORT"
+                            />
 
-            </TableRow>
-            <TableRow android:padding="5dp">
+                    </TableRow>
+                    <TableRow android:padding="5dp">
+                        <TextView
+                            android:padding="5dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=""
+                            />
+                        <TextView
+                            android:padding="5dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/showJob_Strasse_textView"
+                            android:text="STRASSE"
+                            />
+                    </TableRow><TableRow android:padding="5dp">
+                    <TextView
+                        android:padding="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        />
+                    <TextView
+                        android:padding="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/showJob_Zone_textView"
+                        android:text="ZONE"
+                        />
+                </TableRow>
+                <TableRow android:padding="5dp">
+                    <TextView
+                        android:padding="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Beschreibung:"
+                        />
+                </TableRow>
                 <TextView
-                    android:padding="5dp"
+                    android:padding="10dp"
+                    android:id="@+id/showJob_Beschreibung_textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=""
-                    />
-                <TextView
-                    android:padding="5dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/showJob_Strasse_textView"
-                    android:text="STRASSE"
-                    />
-            </TableRow><TableRow android:padding="5dp">
-            <TextView
-                android:padding="5dp"
-                android:layout_width="wrap_content"
+                    android:maxLines="10"
+                    android:scrollbars="vertical"
+                    android:text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+
+Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
+
+Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.
+
+Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
+
+Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis.
+
+At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, At accusam aliquyam diam diam dolore dolores duo eirmod eos erat, et nonumy sed tempor et et invidunt justo labore Stet clita ea et gubergren, kasd magna no rebum. sanctus sea sed takimata ut vero voluptua. est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur"/>
+
+
+            </TableLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text=""
-                />
-            <TextView
-                android:padding="5dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/showJob_Zone_textView"
-                android:text="ZONE"
-                />
-        </TableRow>
-        </TableLayout>
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:orientation="horizontal"
+
+                >
+                <Button
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:gravity="center"
+                    android:layout_width="0dp"
+                    android:layout_weight=".5"
+                    android:layout_height="80dp"
+                    android:text="BUTTONS HERE"
+                    android:layout_marginRight="20dp"
+                     />
+                <Button
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:gravity="center"
+                    android:layout_width="0dp"
+                    android:layout_weight=".5"
+                    android:layout_height="80dp"
+                    android:layout_marginLeft="20dp"
+                    android:text="Second BUTTON"/>
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
     </LinearLayout>
 
 

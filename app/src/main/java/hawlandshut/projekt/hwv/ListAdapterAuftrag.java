@@ -3,32 +3,18 @@ package hawlandshut.projekt.hwv;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.database.DataSetObserver;
-import android.graphics.Color;
-import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.w3c.dom.Text;
-
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.prefs.PreferenceChangeEvent;
 
 public class ListAdapterAuftrag extends BaseAdapter{
 
@@ -52,18 +38,13 @@ public class ListAdapterAuftrag extends BaseAdapter{
         String jsonStr = prefs.getString("jobdata", "");
         if(!jsonStr.isEmpty())
         {
-            Log.d("JSON:", jsonStr);
-
-
             Type listofAuftrag = new TypeToken<ArrayList<Auftrag>>(){}.getType();
-            //String s = gson.toJson(list, listOfTestObject);
 
+            //String s = gson.toJson(list, listOfTestObject);
             Gson gson = new GsonBuilder().create();
-            //Auftrag[] a = gson.fromJson(jsonStr, Auftrag[].class );
 
             auftragsliste = gson.fromJson(jsonStr, listofAuftrag);
 
-            Log.d("testoutput",auftragsliste.get(0).getBeschreibung());
         }
 
     }
