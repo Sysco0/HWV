@@ -53,7 +53,7 @@ public class ListAdapterAuftrag extends BaseAdapter{
         if(!jsonStr.isEmpty())
         {
             Log.d("JSON:", jsonStr);
-        
+
 
             Type listofAuftrag = new TypeToken<ArrayList<Auftrag>>(){}.getType();
             //String s = gson.toJson(list, listOfTestObject);
@@ -107,7 +107,7 @@ public class ListAdapterAuftrag extends BaseAdapter{
 
         if(selected == position)
         {
-            v.setBackgroundColor(Color.GRAY);
+            v.setBackgroundColor(mainActivity.getResources().getColor(R.color.colorChosenItem));
         }
 
         return v;
