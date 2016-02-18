@@ -8,22 +8,25 @@ import java.util.Set;
  */
 public class Auftrag {
     private long id;
-    private int auftrNr;
+    private int auftragNr;
+
+    private int status;
+    private String beschreibung;
+
     private Kunde kunde;
-    private Mitarbeiter erfasser;
-    private Set<Mitarbeiter> arbeiter;
-    private int auftrStat;
 
     //TODO Mitarbeiter arbeitet an
-    private String beschreibung;
+    private Mitarbeiter erfasser;
+    private Set<Mitarbeiter> arbeiter;
+
     private Date empfang;
     private Date start;
 
 
     public Auftrag(long _id, int _auftrNr, int _auftrStat, String _beschreibung, Kunde _kunde, Date _empfang){
         id = _id;
-        auftrNr = _auftrNr;
-        auftrStat = _auftrStat;
+        auftragNr = _auftrNr;
+        status = _auftrStat;
         beschreibung = _beschreibung;
         kunde = _kunde;
         empfang = _empfang;
@@ -38,6 +41,6 @@ public class Auftrag {
     }
 
     public int getAuftrStat() {
-        return auftrStat;
+        return status;
     }
 }

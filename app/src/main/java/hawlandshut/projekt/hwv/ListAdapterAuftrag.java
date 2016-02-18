@@ -15,12 +15,18 @@ import android.widget.BaseAdapter;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.prefs.PreferenceChangeEvent;
 
@@ -37,42 +43,29 @@ public class ListAdapterAuftrag extends BaseAdapter{
         ctx = context;
         mainActivity = act;
         mInflater = LayoutInflater.from(ctx);
-        prefs = ctx.getSharedPreferences("hawlandshut.projekt.hwv",Context.MODE_PRIVATE);
+        prefs = ctx.getSharedPreferences("hawlandshut.projekt.hwv", Context.MODE_PRIVATE);
         initAuftragsListe();
     }
 
     public void updateData(){
         auftragsliste = new ArrayList<>();
-        String jsonStr = prefs.getString("jobdata","");
-        Log.d("JSON:", jsonStr);
-        //TODO: Check on success
-        try {
-            JSONObject jsonRootObj = new JSONObject(jsonStr);
+        String jsonStr = prefs.getString("jobdata", "");
+        if(!jsonStr.isEmpty())
+        {
+            Log.d("JSON:", jsonStr);
+        
 
-            //Extract Array of Entrys
-            JSONArray jobs = jsonRootObj.getJSONArray("jobs");
+            Type listofAuftrag = new TypeToken<ArrayList<Auftrag>>(){}.getType();
+            //String s = gson.toJson(list, listOfTestObject);
 
-            for( int i = 0; i < jobs.length(); i++){
-                JSONObject j = jobs.getJSONObject(i);
+            Gson gson = new GsonBuilder().create();
+            //Auftrag[] a = gson.fromJson(jsonStr, Auftrag[].class );
 
+            auftragsliste = gson.fromJson(jsonStr, listofAuftrag);
 
-                //Erstelle Kunde //TODO: Zu Set ändern - keine duplikate
-                JSONObject k = j.getJSONObject("Kunde");
-                Kunde testKunde =
-                        new Kunde(k.getInt("kdNr"), k.getString("anrede"),
-                        k.getString("name"), k.getString("vorname"), k.getString("adresse"),
-                        k.getInt("plz"), k.getString("ort"), k.getInt("zone"));
-
-                //Schreibe neuen Auftrag
-                auftragsliste.add(
-                        new Auftrag(j.getLong("id"), j.getInt("auftragNr"), j.getInt("status"),
-                                j.getString("beschreibung"), testKunde, new Date()));
-
-            }
-
-        } catch (JSONException e) {
-            e.printStackTrace();
+            Log.d("testoutput",auftragsliste.get(0).getBeschreibung());
         }
+
     }
 
     private void initAuftragsListe(){
