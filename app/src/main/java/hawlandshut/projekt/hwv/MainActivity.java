@@ -2,6 +2,7 @@ package hawlandshut.projekt.hwv;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -57,9 +59,14 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse, Ad
           AuftragList.setAdapter(myListAdapterAuftrag);
           AuftragList.setOnItemClickListener(this);
 
-
-
-
+          Button startJobButton = (Button)findViewById(R.id.startJobButton);
+          startJobButton.setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View v) {
+                  Intent toJobActivity = new Intent(getApplicationContext(),JobActivity.class);
+                  startActivity(toJobActivity);
+              }
+          });
     }
 
     @Override

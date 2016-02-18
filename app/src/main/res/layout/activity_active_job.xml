@@ -159,12 +159,13 @@ At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergr
                      />
                 <Button
                     style="?android:attr/buttonBarButtonStyle"
+                    android:id="@+id/startJobButton"
                     android:gravity="center"
                     android:layout_width="0dp"
                     android:layout_weight=".5"
                     android:layout_height="80dp"
                     android:layout_marginLeft="20dp"
-                    android:text="Second BUTTON"/>
+                    android:text="AUFTRAG AKTIVIEREN"/>
             </LinearLayout>
 
 
