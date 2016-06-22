@@ -64,7 +64,8 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:gravity="center"
-            android:text="TESTELEMENT"/>
+            android:id="@+id/barcodeScannerButton"
+            android:text="BARCODE"/>
     </LinearLayout>
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/fragment_container"

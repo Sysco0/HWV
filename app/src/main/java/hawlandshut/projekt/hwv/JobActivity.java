@@ -1,18 +1,30 @@
 package hawlandshut.projekt.hwv;
 
+import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
-import android.support.v4.app.FragmentActivity;
+import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
+
+
 
 public class JobActivity extends AppCompatActivity
         implements
         ChooseWorkerFragment.OnFragmentInteractionListener,
         AufmassFragement.OnFragmentInteractionListener,
+        OnNewFragmentCreatedCallback,
         View.OnClickListener {
+
+    protected String lastScan = "";
+    private View aufmassView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,12 +33,13 @@ public class JobActivity extends AppCompatActivity
 
         TextView Arbeiter = (TextView)findViewById(R.id.chooseArbeiter);
         TextView Aufmass = (TextView)findViewById(R.id.chooseAufmass);
+        TextView BarcodeButton = (TextView)findViewById(R.id.barcodeScannerButton);
 
         Arbeiter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Create fragment and give it an argument specifying the article it should show
-                ChooseWorkerFragment newFragment = new ChooseWorkerFragment();
+                ChooseWorkerFragment newFragment = ChooseWorkerFragment.newInstance();
                 Bundle args = new Bundle();
                 //args.putInt(ChooseWorkerFragment.ARG_POSITION, position); NOT NEEDED NOW
                 newFragment.setArguments(args);
@@ -47,7 +60,7 @@ public class JobActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 // Create fragment and give it an argument specifying the article it should show
-                AufmassFragement newFragment = new AufmassFragement();
+                AufmassFragement newFragment = AufmassFragement.newInstance(JobActivity.this);
                 Bundle args = new Bundle();
                 //args.putInt(AufmassFragement.ARG_POSITION, position); NOT NEEDED NOW EITHER
                 newFragment.setArguments(args);
@@ -61,8 +74,24 @@ public class JobActivity extends AppCompatActivity
 
                 // Commit the transaction
                 transaction.commit();
+
+                if(aufmassView != null){
+                    TextView aufmassText = (TextView)aufmassView.findViewById(R.id.aufmassTextView);
+                    aufmassText.setText(lastScan);
+                }
             }
         });
+
+        BarcodeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                IntentIntegrator integrator = new IntentIntegrator(JobActivity.this);
+                integrator.initiateScan();
+            }
+        });
+
+
+
 
         if(findViewById(R.id.fragment_container) != null)
         {
@@ -71,7 +100,7 @@ public class JobActivity extends AppCompatActivity
             }
 
             //new ChooseWorker frag
-            ChooseWorkerFragment workerFragment = new ChooseWorkerFragment();
+            ChooseWorkerFragment workerFragment = ChooseWorkerFragment.newInstance();
 
             // In case this activity was started with special instructions from an
             // Intent, pass the Intent's extras to the fragment as arguments
@@ -84,6 +113,19 @@ public class JobActivity extends AppCompatActivity
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
+        if(resultCode != 0){
+            String re = "Scanned:" + scanResult.getContents();
+
+            Context ctx = getApplicationContext();
+            Toast toast = Toast.makeText(ctx, re, Toast.LENGTH_SHORT);
+            toast.show();
+            Log.d("Barcode", re);
+            lastScan = re;
+        }
+    }
 
     //SAME LISTENER FOR BOTH FRAGMENTS!?
     @Override
@@ -96,5 +138,10 @@ public class JobActivity extends AppCompatActivity
     @Override
     public void onClick(View v) {
 
+    }
+
+    @Override
+    public void newFragmentCreated(View fragmentView) {
+        aufmassView = fragmentView;
     }
 }
