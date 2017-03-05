@@ -27,7 +27,6 @@ public class Artikel {
     }
 
     public Artikel(int barcodeID, int standardVPE, String name, String einheit) {
-
         this.barcodeID = barcodeID;
         this.standardVPE = standardVPE;
         this.name = name;
