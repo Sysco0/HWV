@@ -22,6 +22,7 @@ import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse, Ad
     JSONDataUpdater jsonDataUpdater = new JSONDataUpdater();
     ListView AuftragList;
     SharedPreferences sharedPref;
+    Auftrag activeJob;
     Context mainContext;
 
       @Override
@@ -64,6 +66,7 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse, Ad
               @Override
               public void onClick(View v) {
                   Intent toJobActivity = new Intent(getApplicationContext(),JobActivity.class);
+                  toJobActivity.putExtra("activeJob",activeJob);
                   startActivity(toJobActivity);
               }
           });
@@ -112,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse, Ad
         ((ListAdapterAuftrag) parent.getAdapter()).setSelectedItem(position);
         ((ListAdapterAuftrag) parent.getAdapter()).notifyDataSetChanged();
 
-        Auftrag activeJob = (Auftrag) parent.getAdapter().getItem(position);
+        activeJob = (Auftrag) parent.getAdapter().getItem(position);
         TextView anrede = (TextView)findViewById(R.id.showJob_Anrede_textView);
         anrede.setText(activeJob.getKunde().getAnrede());
         TextView nname = (TextView)findViewById(R.id.showJob_Nachname_textView);

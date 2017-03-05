@@ -7,6 +7,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+
+import java.util.ArrayList;
 
 
 /**
@@ -54,14 +59,32 @@ public class ChooseWorkerFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_choose_worker, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_choose_worker, container, false);
+
+        ListView lv = (ListView)rootView.findViewById(R.id.workerList);
+        ListAdapterArbeiter arbeiter = new ListAdapterArbeiter(getContext(),getActivity());
+        lv.setAdapter(arbeiter);
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                ((ListAdapterArbeiter) parent.getAdapter()).setSelectedItem(position);
+                ((ListAdapterArbeiter) parent.getAdapter()).notifyDataSetChanged();
+                Mitarbeiter aktiv = (Mitarbeiter)((ListAdapterArbeiter) parent.getAdapter()).getItem((position));
+                ((JobActivity)getActivity()).setWorker(aktiv);
+            }
+        });
+
+        return rootView;
     }
+
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {

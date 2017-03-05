@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+
+    <LinearLayout
+
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:id="@+id/workerField"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+
+            <TextView
+                android:id="@+id/workerRow_nachname_textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:paddingRight="10dp"
+                android:text="VORNAME"
+                android:textAppearance="?android:attr/textAppearanceListItemSmall"
+                android:textColor="@color/primary_dark_material_dark" />
+
+            <TextView
+                android:id="@+id/workerRow_vorname_textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:text="NACHNAME"
+                android:textAppearance="?android:attr/textAppearanceListItemSmall"
+                android:textColor="@color/primary_dark_material_dark" />
+
+        </LinearLayout>
+    </LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="bottom"
+        android:id="@+id/workerrow_id_textView"
+        android:paddingRight="20dp"
+        android:paddingBottom="10dp"
+        android:textColor="@color/primary_dark_material_dark"
+        android:textAppearance="?android:attr/textAppearanceListItemSmall"
+        android:text="Status"
+        android:layout_alignBottom="@+id/workerField"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+</RelativeLayout>

@@ -148,15 +148,14 @@ At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergr
                 android:orientation="horizontal"
 
                 >
+
                 <Button
-                    style="?android:attr/buttonBarButtonStyle"
-                    android:gravity="center"
                     android:layout_width="0dp"
-                    android:layout_weight=".5"
                     android:layout_height="80dp"
-                    android:text="BUTTONS HERE"
                     android:layout_marginRight="20dp"
-                     />
+                    android:layout_weight=".5"
+                    android:gravity="center"
+                    android:text="BUTTONS HERE" />
                 <Button
                     style="?android:attr/buttonBarButtonStyle"
                     android:id="@+id/startJobButton"
@@ -168,13 +167,8 @@ At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergr
                     android:text="AUFTRAG AKTIVIEREN"/>
             </LinearLayout>
 
-
         </RelativeLayout>
 
     </LinearLayout>
-
-
-
-
 
 </LinearLayout>

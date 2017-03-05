@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#3F51B5</color>
-    <color name="colorChosenItem">#B2DFDB</color>
-    <color name="colorTaskbar">#4DB6AC</color>
+    <color name="colorChosenItem">#9d3f51b4</color>
+    <color name="colorTaskbar">#303f9e</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#919191</color>
 
     <color name="black_overlay">#66000000</color>
 </resources>

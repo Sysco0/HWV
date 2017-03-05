@@ -15,7 +15,6 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
 
-
 public class JobActivity extends AppCompatActivity
         implements
         ChooseWorkerFragment.OnFragmentInteractionListener,
@@ -24,12 +23,25 @@ public class JobActivity extends AppCompatActivity
         View.OnClickListener {
 
     protected String lastScan = "";
-    private View aufmassView;
+    private View aufmassTxtView;
+    private Auftrag activeJob;
+
+    protected void setWorker(Mitarbeiter arbeiter)
+    {
+        TextView workerName = (TextView)findViewById(R.id.WorkerName);
+        workerName.setText( arbeiter.getKuerzel());
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_job);
+
+        Intent intent = getIntent();
+        activeJob = intent.getParcelableExtra("activeJob");
+
+        TextView jobID = (TextView)findViewById(R.id.textViewActiveJob);
+        jobID.setText(activeJob.getKunde().getVorname() + " " + activeJob.getKunde().getName());
 
         TextView Arbeiter = (TextView)findViewById(R.id.chooseArbeiter);
         TextView Aufmass = (TextView)findViewById(R.id.chooseAufmass);
@@ -75,8 +87,8 @@ public class JobActivity extends AppCompatActivity
                 // Commit the transaction
                 transaction.commit();
 
-                if(aufmassView != null){
-                    TextView aufmassText = (TextView)aufmassView.findViewById(R.id.aufmassTextView);
+                if(aufmassTxtView != null){
+                    TextView aufmassText = (TextView) aufmassTxtView.findViewById(R.id.aufmassTextView);
                     aufmassText.setText(lastScan);
                 }
             }
@@ -96,7 +108,7 @@ public class JobActivity extends AppCompatActivity
         if(findViewById(R.id.fragment_container) != null)
         {
             if(savedInstanceState != null){
-                return;//seems strage - maybe a break?
+                return;//seems strange - maybe a break?
             }
 
             //new ChooseWorker frag
@@ -124,6 +136,8 @@ public class JobActivity extends AppCompatActivity
             toast.show();
             Log.d("Barcode", re);
             lastScan = re;
+        }else{
+            Log.d("Barcode", "Nothing scanned");
         }
     }
 
@@ -142,6 +156,6 @@ public class JobActivity extends AppCompatActivity
 
     @Override
     public void newFragmentCreated(View fragmentView) {
-        aufmassView = fragmentView;
+        aufmassTxtView = fragmentView;
     }
 }

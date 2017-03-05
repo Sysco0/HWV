@@ -15,6 +15,7 @@
             android:layout_height="match_parent"
             android:text="A/P 12902109"
             android:gravity="center"
+            android:id="@+id/textViewActiveJob"
             android:layout_alignParentTop="true"
             android:layout_toLeftOf="@+id/WorkerName"
             android:layout_toStartOf="@+id/WorkerName" />
