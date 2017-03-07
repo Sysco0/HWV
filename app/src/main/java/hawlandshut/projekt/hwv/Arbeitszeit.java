@@ -10,6 +10,15 @@ public class Arbeitszeit {
 
     Calendar startTime;
     Calendar endTime;
+    Mitarbeiter worker;
+
+    public Mitarbeiter getWorker() {
+        return worker;
+    }
+
+    public void setWorker(Mitarbeiter worker) {
+        this.worker = worker;
+    }
 
     public Calendar getStartTime() {
         return startTime;

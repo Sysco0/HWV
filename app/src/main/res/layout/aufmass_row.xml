@@ -9,57 +9,65 @@
 
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:layout_alignRight="@+id/AuftragRow_status_textView"
         android:id="@+id/namefield"
-        android:orientation="vertical">
+        android:orientation="horizontal"
+        android:padding="10dp">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="10dp">
 
             <TextView xmlns:android="http://schemas.android.com/apk/res/android"
                 android:id="@+id/aufmassRow_Barcode_textView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="130dp"
+                android:layout_height="match_parent"
                 android:textColor="@color/primary_dark_material_dark"
                 android:textAppearance="?android:attr/textAppearanceListItemSmall"
-                android:text="Barcode"
-                android:paddingRight="10dp"
+                android:text="4066600641964"
                 android:gravity="center_vertical" />
 
             <TextView xmlns:android="http://schemas.android.com/apk/res/android"
                 android:id="@+id/aufmassRow_Artikelname_textView"
-                android:paddingLeft="60dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:paddingLeft="3dp"
+                android:layout_width="wrap_content"
+                android:maxWidth="450dp"
+                android:layout_height="match_parent"
                 android:textColor="@color/primary_dark_material_dark"
                 android:textAppearance="?android:attr/textAppearanceListItemSmall"
                 android:text="Artikelname"
-                android:gravity="center_vertical"/>
+                android:gravity="center_vertical" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                />
 
             <TextView xmlns:android="http://schemas.android.com/apk/res/android"
                 android:id="@+id/aufmassRow_stdVPE_textView"
-                android:paddingLeft="60dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:textColor="@color/primary_dark_material_dark"
                 android:textAppearance="?android:attr/textAppearanceListItemSmall"
-                android:text="Verpackungsgröße"
+                android:text="(20 Flaschen)"
+                android:gravity="center_vertical"/>
+
+            <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/aufmassRow_Anzahl_textView"
+                android:paddingLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textColor="@color/primary_dark_material_dark"
+                android:textAppearance="?android:attr/textAppearanceListItemSmall"
+                android:text="5"
                 android:gravity="center_vertical"/>
 
             <TextView xmlns:android="http://schemas.android.com/apk/res/android"
                 android:id="@+id/aufmassRow_Einheit_textView"
-                android:paddingLeft="60dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:textColor="@color/primary_dark_material_dark"
                 android:textAppearance="?android:attr/textAppearanceListItemSmall"
-                android:text="Einheit"
+                android:text="Kasten"
                 android:gravity="center_vertical"/>
-
         </LinearLayout>
-    </LinearLayout>
-
 </RelativeLayout>

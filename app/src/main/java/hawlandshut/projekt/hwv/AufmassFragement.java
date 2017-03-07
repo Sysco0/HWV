@@ -35,7 +35,7 @@ public class AufmassFragement extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     public AufmassFragement(){
-
+    //Required empty Constructor
     }
 
     /**

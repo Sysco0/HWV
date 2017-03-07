@@ -27,9 +27,8 @@ public class JobActivity extends AppCompatActivity
 
     protected String lastScan = "";
     private View aufmassTxtView;
+    private RunningWork activeWork = new RunningWork();
     private Auftrag activeJob;
-    public ArrayList<Artikel> aufmassList = new ArrayList<>();
-    private ListAdapterAufmass listAdapterAufmass;
 
 
 
@@ -44,10 +43,12 @@ public class JobActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_job);
 
-        aufmassList = new ArrayList<>();
+        //aufmassList = new ArrayList<>();
+        activeWork.setAufmass(new ArrayList<AufmassArtikel>());
 
         Intent intent = getIntent();
         activeJob = intent.getParcelableExtra("activeJob");
+        activeWork.setJob(activeJob);
 
         //Delete ArticleDatabase
         deleteArticleDatabase();
@@ -55,7 +56,7 @@ public class JobActivity extends AppCompatActivity
         addTestRowsToDB();
 
         TextView jobID = (TextView)findViewById(R.id.textViewActiveJob);
-        jobID.setText(activeJob.getKunde().getVorname() + " " + activeJob.getKunde().getName());
+        jobID.setText(activeWork.getJob().getKunde().getVorname() + " " + activeWork.getJob().getKunde().getName());
 
         TextView Arbeiter = (TextView)findViewById(R.id.chooseArbeiter);
         TextView Aufmass = (TextView)findViewById(R.id.chooseAufmass);
@@ -141,10 +142,10 @@ public class JobActivity extends AppCompatActivity
     {
         DBAdapter db = DBAdapter.getsInstance(getApplicationContext());
         db.open();
-        db.insertArtikelDatenRow("Paulaner Hefe Weißbier Naturtrüb","4066600641964","Flaschen","1");
-        db.insertArtikelDatenRow("Augustiner Edelstoff","4105250024007","Flaschen","1");
-        db.insertArtikelDatenRow("Tegernsee Spezial Kasten","4016931051420","Kasten","1");
-        db.insertArtikelDatenRow("Oettinger Hell Kasten","4014086910319","Kasten","1");
+        db.insertArtikelDatenRow("Paulaner Hefe Weißbier Naturtrüb rüb rübrübrübrübrübrübrübrüb rübrübrübrübrübrübrübrübrübrübrübrüb","4066600641964","Flaschen","(1Stk.)");
+        db.insertArtikelDatenRow("Augustiner Edelstoff","4105250024007","Flaschen","(1Stk.)");
+        db.insertArtikelDatenRow("Tegernsee Spezial Kasten","4016931051420","Kasten","(20Fl.)");
+        db.insertArtikelDatenRow("Oettinger Hell Kasten","4014086910319","Kasten","(20Fl.)");
         db.close();
     }
 
@@ -173,8 +174,6 @@ public class JobActivity extends AppCompatActivity
 
             Cursor cursor = db.getArtikelDatenRow(lastScan);
             try {
-
-
                 do {
                     if(cursor == null)
                         break;
@@ -184,7 +183,7 @@ public class JobActivity extends AppCompatActivity
                     String einheit = cursor.getString(4);
                     String stdVPE = cursor.getString(1);
 
-                    aufmassList.add(new Artikel(barcode,stdVPE,name,einheit));
+                    activeWork.addArtikelToAufmass(new Artikel(barcode,stdVPE,name,einheit), 1);//TODO: ADD ANZAHL PICKER
                     cursor.moveToNext();
                 }while(cursor.moveToNext());
 
@@ -197,8 +196,8 @@ public class JobActivity extends AppCompatActivity
         }
     }
 
-    public ArrayList<Artikel> getAufmassList() {
-        return aufmassList;
+    public ArrayList<AufmassArtikel> getAufmassList() {
+        return activeWork.getAufmass();
     }
 
     //SAME LISTENER FOR BOTH FRAGMENTS!?

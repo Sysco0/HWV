@@ -5,10 +5,10 @@ package hawlandshut.projekt.hwv;
  */
 
 public class Artikel {
-    private String barcodeID;   //Strichcode: 4105250022003
-    private String standardVPE; //Verpackungseinheit: 20
-    private String name;     //Name: Augustiner, Hell
-    private String einheit;  //Einheit: Flasche
+    private String barcodeID = "";   //Strichcode: 4105250022003
+    private String standardVPE = ""; //Verpackungseinheit: 20
+    private String name = "";     //Name: Augustiner, Hell
+    private String einheit = "";  //Einheit: Flasche
 
     public String getBarcodeID() {
         return barcodeID;

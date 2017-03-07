@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 public class ListAdapterAufmass extends BaseAdapter{
 
-    private ArrayList<Artikel> aufmassList;
+    private ArrayList<AufmassArtikel> aufmassList;
     private final Context ctx;
     private final Activity mainActivity;
     private final LayoutInflater mInflater;
@@ -31,7 +31,7 @@ public class ListAdapterAufmass extends BaseAdapter{
         initAuftragsListe();
     }
 
-    public void setAufmassList(ArrayList<Artikel> _newAufmass){
+    public void setAufmassList(ArrayList<AufmassArtikel> _newAufmass){
 
         if(_newAufmass != null)
             aufmassList = _newAufmass;
@@ -65,12 +65,27 @@ public class ListAdapterAufmass extends BaseAdapter{
         TextView barcode = (TextView)v.findViewById(R.id.aufmassRow_Barcode_textView);
         TextView stdvpe = (TextView)v.findViewById(R.id.aufmassRow_stdVPE_textView);
         TextView einheit = (TextView)v.findViewById(R.id.aufmassRow_Einheit_textView);
+        TextView anzahl = (TextView)v.findViewById(R.id.aufmassRow_Anzahl_textView);
 
 
-        artname.setText(aufmassList.get(position).getName());
-        barcode.setText(aufmassList.get(position).getBarcodeID());
-        stdvpe.setText(aufmassList.get(position).getStandardVPE());
-        einheit.setText(aufmassList.get(position).getEinheit());
+        if(aufmassList != null)
+        {
+            artname.setText(aufmassList.get(position).getArtikel().getName());
+            barcode.setText(aufmassList.get(position).getArtikel().getBarcodeID());
+            stdvpe.setText(aufmassList.get(position).getArtikel().getStandardVPE());
+            einheit.setText(aufmassList.get(position).getArtikel().getEinheit());
+            anzahl.setText(String.format("%d",aufmassList.get(position).getAnzahl()));
+        }else if( ((JobActivity)mainActivity).getAufmassList() != null)//TODO: DELETE OR MERGE
+        {
+            ArrayList<AufmassArtikel> aufmassList2= ((JobActivity)mainActivity).getAufmassList();
+            artname.setText(aufmassList2.get(position).getArtikel().getName());
+            barcode.setText(aufmassList2.get(position).getArtikel().getBarcodeID());
+            stdvpe.setText(aufmassList2.get(position).getArtikel().getStandardVPE());
+            einheit.setText(aufmassList2.get(position).getArtikel().getEinheit());
+            anzahl.setText(aufmassList2.get(position).getAnzahl());
+        }
+
+
 
         return v;
     }
