@@ -39,6 +39,14 @@ public class ListAdapterArbeiter extends BaseAdapter{
         workerList.add(new Mitarbeiter(2,"Hans","Dämpfinger","HansD"));
         workerList.add(new Mitarbeiter(3,"Josef","Vollgereat","JosefV"));
         workerList.add(new Mitarbeiter(4,"No","Oana","NoO"));
+        workerList.add(new Mitarbeiter(5,"Sepp","Herberger","SeppH"));
+        workerList.add(new Mitarbeiter(6,"Hans","Dämpfinger","HansD"));
+        workerList.add(new Mitarbeiter(7,"Josef","Vollgereat","JosefV"));
+        workerList.add(new Mitarbeiter(8,"No","Oana","NoO"));
+        workerList.add(new Mitarbeiter(9,"Sepp","Herberger","SeppH"));
+        workerList.add(new Mitarbeiter(10,"Hans","Dämpfinger","HansD"));
+        workerList.add(new Mitarbeiter(11,"Josef","Vollgereat","JosefV"));
+        workerList.add(new Mitarbeiter(12,"No","Oana","NoO"));
 
     }
 

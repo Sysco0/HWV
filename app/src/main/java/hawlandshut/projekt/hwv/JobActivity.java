@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +30,7 @@ public class JobActivity extends AppCompatActivity
     private View aufmassTxtView;
     private RunningWork activeWork = new RunningWork();
     private Auftrag activeJob;
+    private Mitarbeiter activeWorker;
 
 
 
@@ -36,6 +38,12 @@ public class JobActivity extends AppCompatActivity
     {
         TextView workerName = (TextView)findViewById(R.id.WorkerName);
         workerName.setText( arbeiter.getKuerzel());
+        activeWorker = arbeiter;
+        activeWork.setNewArbeitsZeit(arbeiter);//TODO: REMOVE
+        ListView az = (ListView)findViewById(R.id.recordedWork);
+        ((ListAdapterArbeitszeit)az.getAdapter()).setArbeitszeitList(activeWork.getWorkedHours());
+        ((ListAdapterArbeitszeit)az.getAdapter()).notifyDataSetChanged();
+
     }
 
     @Override
@@ -134,9 +142,8 @@ public class JobActivity extends AppCompatActivity
                     .add(R.id.fragment_container, workerFragment).commit();
 
         }
-
-
     }
+
 
     private void addTestRowsToDB()
     {
@@ -199,6 +206,7 @@ public class JobActivity extends AppCompatActivity
     public ArrayList<AufmassArtikel> getAufmassList() {
         return activeWork.getAufmass();
     }
+    public ArrayList<Arbeitszeit> getArbeitszeitList() { return activeWork.getWorkedHours(); }
 
     //SAME LISTENER FOR BOTH FRAGMENTS!?
     @Override

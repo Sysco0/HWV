@@ -27,6 +27,8 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:paddingRight="10dp"
+                android:maxWidth="120dp"
+                android:minWidth="120dp"
                 android:text="VORNAME"
                 android:textAppearance="?android:attr/textAppearanceListItemSmall"
                 android:textColor="@color/primary_dark_material_dark" />
@@ -35,6 +37,8 @@
                 android:id="@+id/workerRow_vorname_textView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:maxWidth="150dp"
+                android:minWidth="150dp"
                 android:gravity="center_vertical"
                 android:text="NACHNAME"
                 android:textAppearance="?android:attr/textAppearanceListItemSmall"

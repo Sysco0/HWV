@@ -12,6 +12,10 @@ public class Arbeitszeit {
     Calendar endTime;
     Mitarbeiter worker;
 
+    public Arbeitszeit(Mitarbeiter _worker) {
+       start(_worker);
+    }
+
     public Mitarbeiter getWorker() {
         return worker;
     }
@@ -36,11 +40,15 @@ public class Arbeitszeit {
         this.endTime = endTime;
     }
 
-    public void start(){
-        startTime = Calendar.getInstance();
+    public void start(Mitarbeiter _worker)
+    {
+        if(startTime == null){
+            worker = _worker;
+            startTime = Calendar.getInstance();
+        }
     }
 
-    public void end(){
+    public void endWork(){
         endTime = Calendar.getInstance();
     }
 

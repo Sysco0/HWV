@@ -28,7 +28,7 @@ public class ListAdapterAufmass extends BaseAdapter{
         mInflater = LayoutInflater.from(ctx);
         prefs = ctx.getSharedPreferences("hawlandshut.projekt.hwv", Context.MODE_PRIVATE);
 
-        initAuftragsListe();
+        initAufmassListe();
     }
 
     public void setAufmassList(ArrayList<AufmassArtikel> _newAufmass){
@@ -37,7 +37,7 @@ public class ListAdapterAufmass extends BaseAdapter{
             aufmassList = _newAufmass;
     }
 
-    private void initAuftragsListe(){
+    private void initAufmassListe(){
         aufmassList = new ArrayList<>();
     }
 

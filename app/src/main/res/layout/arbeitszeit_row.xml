@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+
+    <LinearLayout
+
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:id="@+id/workerField"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        >
+
+        <TextView
+            android:id="@+id/arbeitsZeitRow_Worker_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:maxWidth="120dp"
+            android:minWidth="120dp"
+            android:gravity="center_vertical"
+            android:text="MatthiasH"
+            android:textAppearance="?android:attr/textAppearanceListItemSmall"
+            android:textColor="@color/primary_dark_material_dark" />
+
+        <TextView
+            android:id="@+id/arbeitsZeitRow_Start_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:maxWidth="150dp"
+            android:minWidth="150dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="20dp"
+            android:text="12.11.1990 12:30"
+            android:textAppearance="?android:attr/textAppearanceListItemSmall"
+            android:textColor="@color/primary_dark_material_dark" />
+
+
+        <TextView
+            android:id="@+id/arbeitsZeitRow_End_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="20dp"
+            android:maxWidth="150dp"
+            android:minWidth="150dp"
+            android:gravity="center_vertical"
+            android:text="12.11.1990 12:36"
+            android:textAppearance="?android:attr/textAppearanceListItemSmall"
+            android:textColor="@color/primary_dark_material_dark" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            />
+
+        <TextView
+            android:id="@+id/arbeitsZeitRow_Minutes_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="40dp"
+            android:gravity="center_vertical"
+            android:text="6"
+            android:textAppearance="?android:attr/textAppearanceListItemSmall"
+            android:textColor="@color/primary_dark_material_dark" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="10dp"
+            android:gravity="center_vertical"
+            android:text="min"
+            android:textAppearance="?android:attr/textAppearanceListItemSmall"
+            android:textColor="@color/primary_dark_material_dark" />
+
+
+
+        </LinearLayout>
+</RelativeLayout>

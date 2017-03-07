@@ -47,4 +47,21 @@ public class RunningWork {
     public void setAufmass(ArrayList<AufmassArtikel> aufmass) {
         this.aufmass = aufmass;
     }
+
+
+    public void setNewArbeitsZeit(Mitarbeiter _worker)
+    {
+        if(workedHours == null)
+        {
+            workedHours = new ArrayList<>();
+        }
+        for (Arbeitszeit az:workedHours)
+        {
+            if(az.worker.equals(_worker))
+            {
+                az.endWork();
+            }
+        }
+        workedHours.add(new Arbeitszeit(_worker));
+    }
 }

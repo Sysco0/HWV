@@ -81,6 +81,13 @@ public class ChooseWorkerFragment extends Fragment {
             }
         });
 
+        ListView az = (ListView)rootView.findViewById(R.id.recordedWork);
+        ListAdapterArbeitszeit work = new ListAdapterArbeitszeit(getContext(),getActivity());
+        az.setAdapter(work);
+        work.setArbeitszeitList(((JobActivity)getActivity()).getArbeitszeitList());
+        work.notifyDataSetChanged();
+        //OnLongClickListener Delete Row
+
         return rootView;
     }
 

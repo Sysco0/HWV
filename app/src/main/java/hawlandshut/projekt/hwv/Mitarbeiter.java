@@ -33,4 +33,27 @@ public class Mitarbeiter {
     public String getKuerzel() {
         return kuerzel;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Mitarbeiter that = (Mitarbeiter) o;
+
+        if (id != that.id) return false;
+        if (!name.equals(that.name)) return false;
+        if (!vorname.equals(that.vorname)) return false;
+        return kuerzel.equals(that.kuerzel);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + name.hashCode();
+        result = 31 * result + vorname.hashCode();
+        result = 31 * result + kuerzel.hashCode();
+        return result;
+    }
 }
