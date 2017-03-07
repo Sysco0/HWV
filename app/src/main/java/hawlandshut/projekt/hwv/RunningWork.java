@@ -57,7 +57,7 @@ public class RunningWork {
         }
         for (Arbeitszeit az:workedHours)
         {
-            if(az.worker.equals(_worker))
+            if(az.worker.equals(_worker) && !az.isEnd())
             {
                 az.endWork();
             }

@@ -49,7 +49,9 @@ public class Arbeitszeit {
     }
 
     public void endWork(){
-        endTime = Calendar.getInstance();
+        if(endTime == null)
+            endTime = Calendar.getInstance();
+
     }
 
     public long secondsWorked()
@@ -57,10 +59,10 @@ public class Arbeitszeit {
         long worked;
         if(endTime != null)
         {
-            worked = endTime.compareTo(startTime);
+            worked = (endTime.getTimeInMillis() - startTime.getTimeInMillis())/1000;
         }else
         {
-            worked = Calendar.getInstance().compareTo(startTime);
+            worked = (Calendar.getInstance().getTimeInMillis() - startTime.getTimeInMillis())/1000;
         }
 
         return worked;
