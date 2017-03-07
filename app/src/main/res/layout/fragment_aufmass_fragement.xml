@@ -5,11 +5,16 @@
     tools:context="hawlandshut.projekt.hwv.AufmassFragement">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="AUFMASS BIATCH"
-        android:id="@+id/aufmassTextView"/>
+        android:orientation="horizontal">
 
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/listViewAufmass"
+            />
+    </LinearLayout>
 </FrameLayout>

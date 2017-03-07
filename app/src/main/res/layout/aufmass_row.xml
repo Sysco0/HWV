@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <LinearLayout
+
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_alignRight="@+id/AuftragRow_status_textView"
+        android:id="@+id/namefield"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/aufmassRow_Barcode_textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/primary_dark_material_dark"
+                android:textAppearance="?android:attr/textAppearanceListItemSmall"
+                android:text="Barcode"
+                android:paddingRight="10dp"
+                android:gravity="center_vertical" />
+
+            <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/aufmassRow_Artikelname_textView"
+                android:paddingLeft="60dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/primary_dark_material_dark"
+                android:textAppearance="?android:attr/textAppearanceListItemSmall"
+                android:text="Artikelname"
+                android:gravity="center_vertical"/>
+
+            <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/aufmassRow_stdVPE_textView"
+                android:paddingLeft="60dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/primary_dark_material_dark"
+                android:textAppearance="?android:attr/textAppearanceListItemSmall"
+                android:text="Verpackungsgröße"
+                android:gravity="center_vertical"/>
+
+            <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/aufmassRow_Einheit_textView"
+                android:paddingLeft="60dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/primary_dark_material_dark"
+                android:textAppearance="?android:attr/textAppearanceListItemSmall"
+                android:text="Einheit"
+                android:gravity="center_vertical"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

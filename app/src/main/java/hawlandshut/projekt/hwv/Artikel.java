@@ -5,16 +5,16 @@ package hawlandshut.projekt.hwv;
  */
 
 public class Artikel {
-    private int barcodeID;   //Strichcode: 4105250022003
-    private int standardVPE; //Verpackungseinheit: 20
+    private String barcodeID;   //Strichcode: 4105250022003
+    private String standardVPE; //Verpackungseinheit: 20
     private String name;     //Name: Augustiner, Hell
     private String einheit;  //Einheit: Flasche
 
-    public int getBarcodeID() {
+    public String getBarcodeID() {
         return barcodeID;
     }
 
-    public int getStandardVPE() {
+    public String getStandardVPE() {
         return standardVPE;
     }
 
@@ -26,7 +26,7 @@ public class Artikel {
         return einheit;
     }
 
-    public Artikel(int barcodeID, int standardVPE, String name, String einheit) {
+    public Artikel(String barcodeID, String standardVPE, String name, String einheit) {
         this.barcodeID = barcodeID;
         this.standardVPE = standardVPE;
         this.name = name;

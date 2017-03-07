@@ -2,6 +2,7 @@ package hawlandshut.projekt.hwv;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
@@ -14,6 +15,8 @@ import android.widget.Toast;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import java.util.ArrayList;
+
 
 public class JobActivity extends AppCompatActivity
         implements
@@ -25,6 +28,10 @@ public class JobActivity extends AppCompatActivity
     protected String lastScan = "";
     private View aufmassTxtView;
     private Auftrag activeJob;
+    public ArrayList<Artikel> aufmassList = new ArrayList<>();
+    private ListAdapterAufmass listAdapterAufmass;
+
+
 
     protected void setWorker(Mitarbeiter arbeiter)
     {
@@ -37,8 +44,15 @@ public class JobActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_job);
 
+        aufmassList = new ArrayList<>();
+
         Intent intent = getIntent();
         activeJob = intent.getParcelableExtra("activeJob");
+
+        //Delete ArticleDatabase
+        deleteArticleDatabase();
+        //Load Article Database
+        addTestRowsToDB();
 
         TextView jobID = (TextView)findViewById(R.id.textViewActiveJob);
         jobID.setText(activeJob.getKunde().getVorname() + " " + activeJob.getKunde().getName());
@@ -77,6 +91,7 @@ public class JobActivity extends AppCompatActivity
                 //args.putInt(AufmassFragement.ARG_POSITION, position); NOT NEEDED NOW EITHER
                 newFragment.setArguments(args);
 
+
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
                 // Replace whatever is in the fragment_container view with this fragment,
@@ -86,11 +101,6 @@ public class JobActivity extends AppCompatActivity
 
                 // Commit the transaction
                 transaction.commit();
-
-                if(aufmassTxtView != null){
-                    TextView aufmassText = (TextView) aufmassTxtView.findViewById(R.id.aufmassTextView);
-                    aufmassText.setText(lastScan);
-                }
             }
         });
 
@@ -123,22 +133,72 @@ public class JobActivity extends AppCompatActivity
                     .add(R.id.fragment_container, workerFragment).commit();
 
         }
+
+
+    }
+
+    private void addTestRowsToDB()
+    {
+        DBAdapter db = DBAdapter.getsInstance(getApplicationContext());
+        db.open();
+        db.insertArtikelDatenRow("Paulaner Hefe Weißbier Naturtrüb","4066600641964","Flaschen","1");
+        db.insertArtikelDatenRow("Augustiner Edelstoff","4105250024007","Flaschen","1");
+        db.insertArtikelDatenRow("Tegernsee Spezial Kasten","4016931051420","Kasten","1");
+        db.insertArtikelDatenRow("Oettinger Hell Kasten","4014086910319","Kasten","1");
+        db.close();
+    }
+
+    private void deleteArticleDatabase()
+    {
+        DBAdapter db = DBAdapter.getsInstance(getApplicationContext());
+        db.open();
+        db.deleteAll();
+        db.close();
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
         if(resultCode != 0){
-            String re = "Scanned:" + scanResult.getContents();
-
             Context ctx = getApplicationContext();
-            Toast toast = Toast.makeText(ctx, re, Toast.LENGTH_SHORT);
-            toast.show();
+
+            String re = scanResult.getContents();
+            //Toast toast = Toast.makeText(ctx, re, Toast.LENGTH_SHORT);
+            //toast.show();
             Log.d("Barcode", re);
             lastScan = re;
+
+            DBAdapter db = DBAdapter.getsInstance(ctx);
+            db.open();
+
+            Cursor cursor = db.getArtikelDatenRow(lastScan);
+            try {
+
+
+                do {
+                    if(cursor == null)
+                        break;
+
+                    String name = cursor.getString(2);
+                    String barcode = cursor.getString(3);
+                    String einheit = cursor.getString(4);
+                    String stdVPE = cursor.getString(1);
+
+                    aufmassList.add(new Artikel(barcode,stdVPE,name,einheit));
+                    cursor.moveToNext();
+                }while(cursor.moveToNext());
+
+            } finally {
+                cursor.close();
+            }
+            db.close();
         }else{
             Log.d("Barcode", "Nothing scanned");
         }
+    }
+
+    public ArrayList<Artikel> getAufmassList() {
+        return aufmassList;
     }
 
     //SAME LISTENER FOR BOTH FRAGMENTS!?
@@ -156,6 +216,5 @@ public class JobActivity extends AppCompatActivity
 
     @Override
     public void newFragmentCreated(View fragmentView) {
-        aufmassTxtView = fragmentView;
     }
 }

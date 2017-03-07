@@ -3,7 +3,8 @@ package hawlandshut.projekt.hwv;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-/*
+
+
 public class HWVerwaltungDbHelper extends SQLiteOpenHelper{
 
     private static HWVerwaltungDbHelper sInstance = null;
@@ -13,16 +14,18 @@ public class HWVerwaltungDbHelper extends SQLiteOpenHelper{
     private static final String COMMA_SEP = ",";
 
 
-    private static final String SQL_CREATE_ENTRIES_WACHPLAN =
-            "CREATE TABLE " + AuftragDatenContract.AuftragEntry.TABLE_NAME + " ("
-            + AuftragDatenContract.AuftragEntry._ID + " INTEGER PRIMARY KEY, "
-            + AuftragDatenContract.AuftragEntry.COLUMN_NAME_TITLE + TEXT_TYPE + COMMA_SEP
-            + AuftragDatenContract.AuftragEntry.COLUMN_NAME_POSITION + TEXT_TYPE + ");";
+    private static final String SQL_CREATE_ENTRIES_ARTICLES =
+            "CREATE TABLE " + hawlandshut.projekt.hwv.ArtikelDatenContract.ArtikelEntry.TABLE_NAME + " ("
+            + hawlandshut.projekt.hwv.ArtikelDatenContract.ArtikelEntry._ID + " INTEGER PRIMARY KEY, "
+            + hawlandshut.projekt.hwv.ArtikelDatenContract.ArtikelEntry.COLUMN_NAME_ARTICLENAME + TEXT_TYPE + COMMA_SEP
+            + hawlandshut.projekt.hwv.ArtikelDatenContract.ArtikelEntry.COLUMN_NAME_BARCODE_ID + TEXT_TYPE + COMMA_SEP
+            + hawlandshut.projekt.hwv.ArtikelDatenContract.ArtikelEntry.COLUMN_NAME_EINHEIT + TEXT_TYPE + COMMA_SEP
+            + hawlandshut.projekt.hwv.ArtikelDatenContract.ArtikelEntry.COLUMN_NAME_STANDARD_VPE + TEXT_TYPE + ");";
 
-    private static final String SQL_DELETE_ENTRIES = "DROP TABLE IF EXISTS " + AuftragDatenContract.AuftragEntry.TABLE_NAME;
+    private static final String SQL_DELETE_ENTRIES = "DROP TABLE IF EXISTS " + hawlandshut.projekt.hwv.ArtikelDatenContract.ArtikelEntry.TABLE_NAME;
 
-    public static final int DATABASE_VERSION = 0;
-    public static final String DATABASE_NAME = "HWVerwaltung.db";
+    public static final int DATABASE_VERSION = 1;
+    public static final String DATABASE_NAME = "HWVerwaltung_Artikel.db";
 
     public static synchronized HWVerwaltungDbHelper getsInstance(Context context){
         if(sInstance == null){
@@ -37,7 +40,7 @@ public class HWVerwaltungDbHelper extends SQLiteOpenHelper{
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(SQL_CREATE_ENTRIES_WACHPLAN);
+        db.execSQL(SQL_CREATE_ENTRIES_ARTICLES);
     }
 
     @Override
@@ -51,8 +54,4 @@ public class HWVerwaltungDbHelper extends SQLiteOpenHelper{
     }
 
     //onDowngrade?
-
-
-
 }
-*/
