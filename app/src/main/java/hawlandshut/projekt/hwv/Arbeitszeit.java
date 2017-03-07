@@ -51,7 +51,6 @@ public class Arbeitszeit {
     public void endWork(){
         if(endTime == null)
             endTime = Calendar.getInstance();
-
     }
 
     public long secondsWorked()
