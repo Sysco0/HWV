@@ -22,9 +22,11 @@ import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.URL;
+
+import hawlandshut.projekt.hwv.db.helper.DBHelper;
+import hawlandshut.projekt.hwv.db.resource.DBArticle;
 
 
 public class MainActivity extends AppCompatActivity implements AsyncResponse, AdapterView.OnItemClickListener{
@@ -70,6 +72,12 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse, Ad
                   startActivity(toJobActivity);
               }
           });
+
+          /**
+           * Initialize database connection
+           */
+          DBHelper.getInstance(this.getApplicationContext(), "HWV_DB")
+                  .addResources(DBArticle.class);
     }
 
     @Override
@@ -174,9 +182,6 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse, Ad
             editor.putString("jobdata", result);
             editor.apply();
             //Do something with the JSON string
-
-
-
             delegate.processFinish(result);
 
         }
