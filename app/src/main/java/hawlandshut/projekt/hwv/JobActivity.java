@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,18 +37,18 @@ public class JobActivity extends AppCompatActivity
 
     protected void setActiveFragment(int fragmentNr)
     {
-        TextView Arbeiter = (TextView)findViewById(R.id.chooseArbeiter);
-        TextView Aufmass = (TextView)findViewById(R.id.chooseAufmass);
-        TextView BarcodeButton = (TextView)findViewById(R.id.barcodeScannerButton);
+        RelativeLayout arbeiterBG = (RelativeLayout)findViewById(R.id.chooseArbeiterBG);
+        RelativeLayout aufmassBG = (RelativeLayout)findViewById(R.id.chooseAufmassBG);
+        RelativeLayout barcodeButtonBG = (RelativeLayout)findViewById(R.id.barcodeScannerButtonBG);
 
         switch (fragmentNr){
             case 1:
-                Arbeiter.setBackgroundColor(getColor(R.color.colorChosenItem));
-                Aufmass.setBackgroundColor(getColor(R.color.colorLightGreen600));
+                arbeiterBG.setBackgroundColor(getColor(R.color.backgroundSelected));
+                aufmassBG.setBackgroundColor(getColor(R.color.backgroundGrey));
                 break;
             case 2:
-                Aufmass.setBackgroundColor(getColor(R.color.colorChosenItem));
-                Arbeiter.setBackgroundColor(getColor(R.color.colorLightGreen600));
+                aufmassBG.setBackgroundColor(getColor(R.color.backgroundSelected));
+                arbeiterBG.setBackgroundColor(getColor(R.color.backgroundGrey));
                 break;
             default:
                 break;

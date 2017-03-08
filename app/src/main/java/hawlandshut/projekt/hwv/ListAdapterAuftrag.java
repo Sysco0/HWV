@@ -88,7 +88,7 @@ public class ListAdapterAuftrag extends BaseAdapter{
 
         if(selected == position)
         {
-            v.setBackgroundColor(mainActivity.getResources().getColor(R.color.colorChosenItem));
+            v.setBackgroundColor(mainActivity.getResources().getColor(R.color.backgroundSelected));
         }
 
         return v;

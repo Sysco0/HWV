@@ -27,11 +27,12 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight=".40"
-            android:background="@color/colorLightGreen500"
-            android:clickable="true"></ListView>
+            android:background="@color/backgroundGrey"
+            android:clickable="true"/>
 
         <RelativeLayout
             android:layout_width="0dp"
+            android:background="@color/backgroundGrey"
             android:layout_height="match_parent"
             android:layout_weight=".60">
 
@@ -48,7 +49,7 @@
                         android:padding="5dp"
 
                         android:text="Kunde:"
-                        android:textColor="@color/colorLightGreenText" />
+                        android:textColor="@color/colorTextDark" />
 
                     <TextView
                         android:id="@+id/showJob_Anrede_textView"
@@ -57,7 +58,7 @@
                         android:padding="5dp"
 
                         android:text="ANREDE"
-                        android:textColor="@color/colorLightGreenText" />
+                        android:textColor="@color/colorTextDark" />
 
                     <TextView
                         android:id="@+id/showJob_Nachname_textView"
@@ -66,7 +67,7 @@
                         android:padding="5dp"
 
                         android:text="NACHNAME"
-                        android:textColor="@color/colorLightGreenText" />
+                        android:textColor="@color/colorTextDark" />
 
                     <TextView
                         android:id="@+id/showJob_Vorname_textView"
@@ -75,7 +76,7 @@
                         android:padding="5dp"
 
                         android:text="VORNAME"
-                        android:textColor="@color/colorLightGreenText" />
+                        android:textColor="@color/colorTextDark" />
                 </TableRow>
 
                 <TableRow android:padding="5dp">
@@ -86,7 +87,7 @@
                         android:padding="5dp"
 
                         android:text="Adresse:"
-                        android:textColor="@color/colorLightGreenText" />
+                        android:textColor="@color/colorTextDark" />
 
                     <TextView
                         android:id="@+id/showJob_Plz_Ort_textView"
@@ -95,7 +96,7 @@
                         android:padding="5dp"
 
                         android:text="PLZ ORT"
-                        android:textColor="@color/colorLightGreenText" />
+                        android:textColor="@color/colorTextDark" />
 
                 </TableRow>
 
@@ -107,7 +108,7 @@
                         android:padding="5dp"
 
                         android:text=""
-                        android:textColor="@color/colorLightGreenText" />
+                        android:textColor="@color/colorTextDark" />
 
                     <TextView
                         android:id="@+id/showJob_Strasse_textView"
@@ -116,7 +117,7 @@
                         android:padding="5dp"
 
                         android:text="STRASSE"
-                        android:textColor="@color/colorLightGreenText" />
+                        android:textColor="@color/colorTextDark" />
                 </TableRow>
 
                 <TableRow android:padding="5dp">
@@ -134,7 +135,7 @@
                         android:padding="5dp"
 
                         android:text="ZONE"
-                        android:textColor="@color/colorLightGreenText" />
+                        android:textColor="@color/colorTextDark" />
                 </TableRow>
 
                 <TableRow android:padding="5dp">
@@ -144,7 +145,7 @@
                         android:layout_height="wrap_content"
                         android:padding="5dp"
                         android:text="Beschreibung:"
-                        android:textColor="@color/colorLightGreenText"
+                        android:textColor="@color/colorTextDark"
 
                         />
                 </TableRow>
@@ -168,7 +169,7 @@ Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming 
 Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis.
 
 At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, At accusam aliquyam diam diam dolore dolores duo eirmod eos erat, et nonumy sed tempor et et invidunt justo labore Stet clita ea et gubergren, kasd magna no rebum. sanctus sea sed takimata ut vero voluptua. est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur"
-                    android:textColor="@color/colorLightGreenText" />
+                    android:textColor="@color/colorTextDark" />
 
 
             </TableLayout>
