@@ -34,6 +34,12 @@ public class JobActivity extends AppCompatActivity
     private Auftrag activeJob;
     private Mitarbeiter activeWorker;
 
+    public ArrayList<Integer> getWorkingPositions() {
+        return workingPositions;
+    }
+
+    private ArrayList<Integer> workingPositions = new ArrayList<>();
+
 
     protected void setActiveFragment(int fragmentNr)
     {
@@ -252,5 +258,16 @@ public class JobActivity extends AppCompatActivity
 
     @Override
     public void newFragmentCreated(View fragmentView) {
+    }
+
+    public void toogleWorkingPosition(int position)
+    {
+        if(workingPositions.contains(position))
+        {
+            workingPositions.remove(workingPositions.indexOf(position));
+        }else{
+            workingPositions.add(position);
+        }
+
     }
 }

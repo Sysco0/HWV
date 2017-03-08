@@ -71,11 +71,14 @@ public class ChooseWorkerFragment extends Fragment {
         ListView lv = (ListView)rootView.findViewById(R.id.workerList);
         ListAdapterArbeiter arbeiter = new ListAdapterArbeiter(getContext(),getActivity());
         lv.setAdapter(arbeiter);
+        arbeiter.setWorkingPositions(((JobActivity)getActivity()).getWorkingPositions());
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ((ListAdapterArbeiter) parent.getAdapter()).setSelectedItem(position);
+                ((JobActivity)getActivity()).toogleWorkingPosition(position);//setSelectedItem(position);
+                ((ListAdapterArbeiter) parent.getAdapter()).setWorkingPositions(((JobActivity)getActivity()).getWorkingPositions());
                 ((ListAdapterArbeiter) parent.getAdapter()).notifyDataSetChanged();
+
                 Mitarbeiter aktiv = (Mitarbeiter)((ListAdapterArbeiter) parent.getAdapter()).getItem((position));
                 ((JobActivity)getActivity()).setWorker(aktiv);
             }

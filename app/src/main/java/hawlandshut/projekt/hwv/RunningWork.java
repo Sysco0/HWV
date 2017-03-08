@@ -51,6 +51,7 @@ public class RunningWork {
 
     public void setNewArbeitsZeit(Mitarbeiter _worker)
     {
+        boolean foundWork = false;
         if(workedHours == null)
         {
             workedHours = new ArrayList<>();
@@ -60,8 +61,11 @@ public class RunningWork {
             if(az.worker.equals(_worker) && !az.isEnd())
             {
                 az.endWork();
+                foundWork = true;
             }
         }
-        workedHours.add(new Arbeitszeit(_worker));
+        
+        if(!foundWork)
+            workedHours.add(new Arbeitszeit(_worker));
     }
 }

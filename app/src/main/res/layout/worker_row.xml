@@ -11,6 +11,8 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:id="@+id/workerField"
+        android:background="@color/backgroundLightGrey"
+        android:layout_margin="@dimen/textView_margin_button"
         android:orientation="vertical">
 
 
@@ -56,7 +58,7 @@
         android:paddingBottom="10dp"
         android:textColor="@color/primary_dark_material_dark"
         android:textAppearance="?android:attr/textAppearanceListItemSmall"
-        android:text="Status"
+        android:text="ID: "
         android:layout_alignBottom="@+id/workerField"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />

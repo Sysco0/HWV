@@ -6,7 +6,8 @@
     <color name="colorPrimaryDark">@color/colorLightGreen900</color>
     <color name="colorAccent">@color/colorLightGreen800</color>
     <color name="backgroundGrey">@color/colorGrey300</color>
-    <color name="backgroundSelected">@color/colorGrey800</color>
+    <color name="backgroundSelected">@color/colorGrey700</color>
+    <color name="backgroundLightGrey">@color/colorGrey100</color>
 
     <color name="black_overlay">#66000000</color>
 
@@ -27,7 +28,6 @@
     <color name="colorLightGreenA200">#B2FF59</color>
     <color name="colorLightGreenA400">#76FF03</color>
     <color name="colorLightGreenA700">#64DD17</color>
-
 
 
     <color name="colorGrey50">#FAFAFA</color>

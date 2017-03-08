@@ -9,8 +9,10 @@
 
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:id="@+id/namefield"
+        android:id="@+id/aufmassField"
         android:orientation="horizontal"
+        android:layout_margin="@dimen/textView_margin_button"
+        android:background="@color/backgroundLightGrey"
         android:padding="10dp">
 
 

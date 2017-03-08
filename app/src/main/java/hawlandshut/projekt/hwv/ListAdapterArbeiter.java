@@ -22,7 +22,12 @@ public class ListAdapterArbeiter extends BaseAdapter{
     private final Context ctx;
     private final Activity mainActivity;
     private final LayoutInflater mInflater;
-    private int selected= 9999999;//Dirty - change this
+
+    public void setWorkingPositions(ArrayList<Integer> workingPositions) {
+        this.workingPositions = workingPositions;
+    }
+
+    private ArrayList<Integer> workingPositions = new ArrayList<>();
     private SharedPreferences prefs;
 
     public ListAdapterArbeiter(Context context, Activity act) {
@@ -84,8 +89,9 @@ public class ListAdapterArbeiter extends BaseAdapter{
         String statusText = "ID: "+ workerList.get(position).getId();
         id.setText(statusText);
 
+        workingPositions = ((JobActivity)mainActivity).getWorkingPositions();
 
-        if(selected == position)
+        if(workingPositions.contains(position))
         {
             v.setBackgroundColor(mainActivity.getResources().getColor(R.color.colorChosenItem));
         }
@@ -93,10 +99,7 @@ public class ListAdapterArbeiter extends BaseAdapter{
         return v;
     }
 
-    public void setSelectedItem(int position)
-    {
-        selected = position;
-    }
+
 
 
 }

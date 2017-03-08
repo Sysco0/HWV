@@ -47,7 +47,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="5dp"
-
+                        android:textStyle="bold"
                         android:text="Kunde:"
                         android:textColor="@color/colorTextDark" />
 
@@ -56,6 +56,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="5dp"
+                        android:background="@color/backgroundLightGrey"
 
                         android:text="ANREDE"
                         android:textColor="@color/colorTextDark" />
@@ -65,6 +66,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="5dp"
+                        android:background="@color/backgroundLightGrey"
 
                         android:text="NACHNAME"
                         android:textColor="@color/colorTextDark" />
@@ -74,6 +76,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="5dp"
+                        android:background="@color/backgroundLightGrey"
 
                         android:text="VORNAME"
                         android:textColor="@color/colorTextDark" />
@@ -85,7 +88,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="5dp"
-
+                        android:textStyle="bold"
                         android:text="Adresse:"
                         android:textColor="@color/colorTextDark" />
 
@@ -94,6 +97,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="5dp"
+                        android:background="@color/backgroundLightGrey"
 
                         android:text="PLZ ORT"
                         android:textColor="@color/colorTextDark" />
@@ -115,6 +119,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="5dp"
+                        android:background="@color/backgroundLightGrey"
 
                         android:text="STRASSE"
                         android:textColor="@color/colorTextDark" />
@@ -133,6 +138,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="5dp"
+                        android:background="@color/backgroundLightGrey"
 
                         android:text="ZONE"
                         android:textColor="@color/colorTextDark" />
@@ -145,6 +151,8 @@
                         android:layout_height="wrap_content"
                         android:padding="5dp"
                         android:text="Beschreibung:"
+
+                        android:textStyle="bold"
                         android:textColor="@color/colorTextDark"
 
                         />
@@ -155,7 +163,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:maxLines="10"
-
+                    android:background="@color/backgroundLightGrey"
                     android:padding="10dp"
                     android:scrollbars="vertical"
                     android:text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.

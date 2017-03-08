@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_alignRight="@+id/AuftragRow_status_textView"
         android:background="@color/colorPrimary"
-        android:layout_margin="5dp"
+        android:layout_margin="@dimen/textView_margin_button"
         android:id="@+id/namefield"
         android:orientation="vertical">
 
