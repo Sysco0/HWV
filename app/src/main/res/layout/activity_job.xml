@@ -73,7 +73,6 @@
             android:id="@+id/chooseAufmass"
             android:clickable="true"
             android:background="@color/colorLightGreen600"
-
             android:textColor="@color/colorLightGreenText"
             android:text="AUFMASS"/>
         <TextView
