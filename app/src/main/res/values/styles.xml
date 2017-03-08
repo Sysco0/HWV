@@ -3,9 +3,13 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/colorLightGreen500</item>
+        <item name="colorPrimaryDark">@color/colorLightGreen900</item>
+        <item name="colorAccent">@color/colorLightGreen800</item>
+    </style>
+    <style name="AppTheme.Button" parent="Widget.AppCompat.Button.Colored">
+        <item name="colorButtonNormal">@color/colorLightGreen800</item>
+        <item name="android:textColor">@color/colorLightGreenTextWhite700</item>
     </style>
 
 </resources>

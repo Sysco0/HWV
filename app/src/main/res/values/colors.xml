@@ -1,10 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorChosenItem">#9d3f51b4</color>
-    <color name="colorTaskbar">#303f9e</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#919191</color>
-
+    <color name="colorPrimary">@color/colorLightGreen500</color>
+    <color name="colorChosenItem">@color/colorLightGreen200</color>
+    <color name="colorTaskbar">@color/colorLightGreen500</color>
+    <color name="colorPrimaryDark">@color/colorLightGreen900</color>
+    <color name="colorAccent">@color/colorLightGreen800</color>
     <color name="black_overlay">#66000000</color>
+    <color name="colorLightGreen500">#8BC34A</color>
+    <color name="colorLightGreen50">#F1F8E9</color>
+    <color name="colorLightGreen100">#DCEDC8</color>
+    <color name="colorLightGreen200">#C5E1A5</color>
+    <color name="colorLightGreen300">#AED581</color>
+    <color name="colorLightGreen400">#9CCC65</color>
+    <color name="colorLightGreen600">#7CB342</color>
+    <color name="colorLightGreen700">#689F38</color>
+    <color name="colorLightGreen800">#558B2F</color>
+    <color name="colorLightGreen900">#33691E</color>
+    <color name="colorLightGreenA100">#CCFF90</color>
+    <color name="colorLightGreenA200">#B2FF59</color>
+    <color name="colorLightGreenA400">#76FF03</color>
+    <color name="colorLightGreenA700">#64DD17</color>
+    <color name="colorLightGreenText">#000000</color>
+    <color name="colorLightGreenTextWhite700">#FFFFFF</color>
+
 </resources>

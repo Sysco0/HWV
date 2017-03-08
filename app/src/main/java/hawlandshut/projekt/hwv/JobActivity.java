@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -33,6 +34,25 @@ public class JobActivity extends AppCompatActivity
     private Mitarbeiter activeWorker;
 
 
+    protected void setActiveFragment(int fragmentNr)
+    {
+        TextView Arbeiter = (TextView)findViewById(R.id.chooseArbeiter);
+        TextView Aufmass = (TextView)findViewById(R.id.chooseAufmass);
+        TextView BarcodeButton = (TextView)findViewById(R.id.barcodeScannerButton);
+
+        switch (fragmentNr){
+            case 1:
+                Arbeiter.setBackgroundColor(getColor(R.color.colorChosenItem));
+                Aufmass.setBackgroundColor(getColor(R.color.colorLightGreen600));
+                break;
+            case 2:
+                Aufmass.setBackgroundColor(getColor(R.color.colorChosenItem));
+                Arbeiter.setBackgroundColor(getColor(R.color.colorLightGreen600));
+                break;
+            default:
+                break;
+        }
+    }
 
     protected void setWorker(Mitarbeiter arbeiter)
     {
@@ -70,6 +90,8 @@ public class JobActivity extends AppCompatActivity
         TextView Aufmass = (TextView)findViewById(R.id.chooseAufmass);
         TextView BarcodeButton = (TextView)findViewById(R.id.barcodeScannerButton);
 
+
+
         Arbeiter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,6 +110,8 @@ public class JobActivity extends AppCompatActivity
 
                 // Commit the transaction
                 transaction.commit();
+
+                setActiveFragment(1);
             }
         });
 
@@ -110,6 +134,8 @@ public class JobActivity extends AppCompatActivity
 
                 // Commit the transaction
                 transaction.commit();
+
+                setActiveFragment(2);
             }
         });
 
@@ -140,6 +166,8 @@ public class JobActivity extends AppCompatActivity
             // Add the fragment to the 'fragment_container' FrameLayout
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fragment_container, workerFragment).commit();
+
+            setActiveFragment(1);
 
         }
     }

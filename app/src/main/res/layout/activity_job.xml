@@ -8,6 +8,7 @@
 
         android:id="@+id/topWorkerBar"
         android:layout_width="match_parent"
+        android:background="@color/colorLightGreen500"
         android:layout_height="60dp">
         <TextView
             android:paddingLeft="30dp"
@@ -18,6 +19,7 @@
             android:id="@+id/textViewActiveJob"
             android:layout_alignParentTop="true"
             android:layout_toLeftOf="@+id/WorkerName"
+            android:textColor="@color/colorLightGreenText"
             android:layout_toStartOf="@+id/WorkerName" />
         <TextView
             android:paddingLeft="30dp"
@@ -28,6 +30,7 @@
             android:layout_alignParentTop="true"
             android:layout_toLeftOf="@+id/startStop"
             android:layout_toStartOf="@+id/startStop"
+            android:textColor="@color/colorLightGreenText"
             android:id="@+id/WorkerName" />
         <TextView
 
@@ -39,6 +42,8 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
+
+            android:textColor="@color/colorLightGreenText"
             android:id="@+id/startStop" />
     </RelativeLayout>
     <LinearLayout
@@ -46,25 +51,39 @@
         android:id="@+id/ActionTabs"
         android:layout_width="100dp"
         android:layout_height="match_parent"
+        android:background="@color/colorLightGreen500"
         android:orientation="vertical">
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="0dp"
+            android:layout_weight="0.33"
+            android:layout_margin="10dp"
             android:gravity="center"
             android:id="@+id/chooseArbeiter"
+            android:textColor="@color/colorLightGreenText"
+            android:background="@color/colorLightGreen600"
             android:clickable="true"
             android:text="ARBEITER"/>
         <TextView
+            android:layout_margin="10dp"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="0dp"
+            android:layout_weight="0.33"
             android:gravity="center"
             android:id="@+id/chooseAufmass"
             android:clickable="true"
+            android:background="@color/colorLightGreen600"
+
+            android:textColor="@color/colorLightGreenText"
             android:text="AUFMASS"/>
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="0dp"
+            android:layout_weight="0.33"
+            android:layout_margin="10dp"
             android:gravity="center"
+            android:background="@color/colorLightGreen600"
+            android:textColor="@color/colorLightGreenText"
             android:id="@+id/barcodeScannerButton"
             android:text="BARCODE"/>
     </LinearLayout>

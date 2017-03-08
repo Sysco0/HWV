@@ -18,7 +18,7 @@
                 android:id="@+id/aufmassRow_Barcode_textView"
                 android:layout_width="130dp"
                 android:layout_height="match_parent"
-                android:textColor="@color/primary_dark_material_dark"
+                android:textColor="@color/colorLightGreenText"
                 android:textAppearance="?android:attr/textAppearanceListItemSmall"
                 android:text="4066600641964"
                 android:gravity="center_vertical" />
@@ -29,7 +29,7 @@
                 android:layout_width="wrap_content"
                 android:maxWidth="450dp"
                 android:layout_height="match_parent"
-                android:textColor="@color/primary_dark_material_dark"
+                android:textColor="@color/colorLightGreenText"
                 android:textAppearance="?android:attr/textAppearanceListItemSmall"
                 android:text="Artikelname"
                 android:gravity="center_vertical" />
@@ -45,7 +45,7 @@
                 android:paddingLeft="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:textColor="@color/primary_dark_material_dark"
+                android:textColor="@color/colorLightGreenText"
                 android:textAppearance="?android:attr/textAppearanceListItemSmall"
                 android:text="(20 Flaschen)"
                 android:gravity="center_vertical"/>
@@ -55,7 +55,7 @@
                 android:paddingLeft="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:textColor="@color/primary_dark_material_dark"
+                android:textColor="@color/colorLightGreenText"
                 android:textAppearance="?android:attr/textAppearanceListItemSmall"
                 android:text="5"
                 android:gravity="center_vertical"/>
@@ -65,7 +65,7 @@
                 android:paddingLeft="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:textColor="@color/primary_dark_material_dark"
+                android:textColor="@color/colorLightGreenText"
                 android:textAppearance="?android:attr/textAppearanceListItemSmall"
                 android:text="Kasten"
                 android:gravity="center_vertical"/>

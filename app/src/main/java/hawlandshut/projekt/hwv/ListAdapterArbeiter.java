@@ -22,7 +22,7 @@ public class ListAdapterArbeiter extends BaseAdapter{
     private final Context ctx;
     private final Activity mainActivity;
     private final LayoutInflater mInflater;
-    private int selected;
+    private int selected= 9999999;//Dirty - change this
     private SharedPreferences prefs;
 
     public ListAdapterArbeiter(Context context, Activity act) {

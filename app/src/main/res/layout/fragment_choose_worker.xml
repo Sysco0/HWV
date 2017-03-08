@@ -20,7 +20,7 @@
         <android.support.v4.widget.Space
             android:layout_width="match_parent"
             android:layout_height="20dp"
-            android:background="@color/colorPrimaryDark"/>
+            android:background="@color/colorLightGreen100"/>
         <ListView
             android:layout_width="match_parent"
             android:layout_height="0dp"
