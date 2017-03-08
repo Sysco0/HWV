@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.text.method.ScrollingMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -57,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse, Ad
 
           ActionBar myBar = getSupportActionBar();
           if(myBar != null){
-              myBar.setTitle("Auftragsliste");
+              myBar.setTitle(Html.fromHtml("<b><font color='#FFFFFF'>Auftragsliste</font></b>"));
           }
 
           AuftragList.setAdapter(myListAdapterAuftrag);
@@ -124,12 +125,15 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse, Ad
         ((ListAdapterAuftrag) parent.getAdapter()).notifyDataSetChanged();
 
         activeJob = (Auftrag) parent.getAdapter().getItem(position);
+
+        String anredeKombi = activeJob.getKunde().getAnrede()+ " " + activeJob.getKunde().getVorname() + " " + activeJob.getKunde().getName();
+
         TextView anrede = (TextView)findViewById(R.id.showJob_Anrede_textView);
-        anrede.setText(activeJob.getKunde().getAnrede());
-        TextView nname = (TextView)findViewById(R.id.showJob_Nachname_textView);
-        nname.setText(activeJob.getKunde().getName());
-        TextView vname = (TextView)findViewById(R.id.showJob_Vorname_textView);
-        vname.setText(activeJob.getKunde().getVorname());
+        anrede.setText(anredeKombi);
+        //TextView nname = (TextView)findViewById(R.id.showJob_Nachname_textView);
+        //nname.setText(activeJob.getKunde().getName());
+        //TextView vname = (TextView)findViewById(R.id.showJob_Vorname_textView);
+        //vname.setText(activeJob.getKunde().getVorname());
         TextView plzOrt = (TextView)findViewById(R.id.showJob_Plz_Ort_textView);
         plzOrt.setText(activeJob.getKunde().getPlz() + " " + activeJob.getKunde().getOrt()); //evtl unschön
         TextView strasse = (TextView)findViewById(R.id.showJob_Strasse_textView);

@@ -80,7 +80,7 @@ public class ChooseWorkerFragment extends Fragment {
                 ((ListAdapterArbeiter) parent.getAdapter()).notifyDataSetChanged();
 
                 Mitarbeiter aktiv = (Mitarbeiter)((ListAdapterArbeiter) parent.getAdapter()).getItem((position));
-                ((JobActivity)getActivity()).setWorker(aktiv);
+                ((JobActivity)getActivity()).toggleWorker(aktiv);
             }
         });
 

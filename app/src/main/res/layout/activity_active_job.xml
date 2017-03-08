@@ -11,8 +11,9 @@
         android:id="@+id/my_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorLightGreen500"
-        android:elevation="4dp"
+        android:background="@color/colorPrimary"
+        android:titleTextColor="@color/colorTextLight"
+
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
@@ -61,7 +62,7 @@
                         android:text="ANREDE"
                         android:textColor="@color/colorTextDark" />
 
-                    <TextView
+                    <!--<TextView
                         android:id="@+id/showJob_Nachname_textView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -79,7 +80,7 @@
                         android:background="@color/backgroundLightGrey"
 
                         android:text="VORNAME"
-                        android:textColor="@color/colorTextDark" />
+                        android:textColor="@color/colorTextDark" />-->
                 </TableRow>
 
                 <TableRow android:padding="5dp">

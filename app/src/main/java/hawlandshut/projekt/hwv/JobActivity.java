@@ -33,7 +33,7 @@ public class JobActivity extends AppCompatActivity
     private View aufmassTxtView;
     private RunningWork activeWork = new RunningWork();
     private Auftrag activeJob;
-    private Mitarbeiter activeWorker;
+    private ArrayList<Mitarbeiter> activeWorker = new ArrayList<>();
 
     public ArrayList<Integer> getWorkingPositions() {
         return workingPositions;
@@ -62,11 +62,31 @@ public class JobActivity extends AppCompatActivity
         }
     }
 
-    protected void setWorker(Mitarbeiter arbeiter)
+    protected void toggleWorker(Mitarbeiter arbeiter)
     {
         TextView workerName = (TextView)findViewById(R.id.WorkerName);
-        workerName.setText( arbeiter.getKuerzel());
-        activeWorker = arbeiter;
+        String activeWorkers = "";
+
+        if(activeWorker.contains(arbeiter))
+        {
+            activeWorker.remove(arbeiter);
+        }else
+        {
+            activeWorker.add(arbeiter);
+        }
+
+        for (Mitarbeiter ma: activeWorker)
+        {
+            if(!activeWorkers.isEmpty())
+                activeWorkers += ", ";
+            activeWorkers += ma.getKuerzel();
+        }
+
+        if(workerName != null)
+        {
+            workerName.setText(activeWorkers);
+        }
+
         activeWork.setNewArbeitsZeit(arbeiter);//TODO: REMOVE
         ListView az = (ListView)findViewById(R.id.recordedWork);
         ((ListAdapterArbeitszeit)az.getAdapter()).setArbeitszeitList(activeWork.getWorkedHours());

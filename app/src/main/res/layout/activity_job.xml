@@ -12,9 +12,10 @@
         android:layout_height="60dp">
 
         <TextView
-            android:paddingLeft="30dp"
+            android:paddingLeft="15dp"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:textSize="20sp"
             android:text="A/P 12902109"
             android:gravity="center"
             android:id="@+id/textViewActiveJob"
@@ -23,7 +24,6 @@
             android:textColor="@color/colorTextLight" />
 
         <TextView
-
             android:paddingLeft="30dp"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -32,15 +32,15 @@
             android:textColor="@color/colorTextDark"
             android:id="@+id/startStop"
             android:layout_alignParentTop="true"
-            android:layout_toStartOf="@+id/WorkerName" />
-
+            android:layout_centerHorizontal="true" />
 
         <TextView
             android:paddingLeft="30dp"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="HANS DAMPF"
             android:gravity="center"
+            android:paddingEnd="10dp"
+            android:textStyle="bold"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"

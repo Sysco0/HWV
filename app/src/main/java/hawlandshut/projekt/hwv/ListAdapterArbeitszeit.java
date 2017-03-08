@@ -83,7 +83,9 @@ public class ListAdapterArbeitszeit extends BaseAdapter{
             }else{
                 end.setText("");
             }
-            minutes.setText(String.format("%d",arbeitszeitList.get(position).secondsWorked()/60));
+            double minutesDouble = arbeitszeitList.get(position).secondsWorked();
+            minutesDouble = minutesDouble/60.0;
+            minutes.setText(String.format("%.2f",minutesDouble));
         }
 
         return v;

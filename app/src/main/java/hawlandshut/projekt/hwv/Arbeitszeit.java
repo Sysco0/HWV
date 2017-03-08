@@ -1,5 +1,7 @@
 package hawlandshut.projekt.hwv;
 
+import android.util.Log;
+
 import java.util.Calendar;
 
 /**
@@ -63,6 +65,7 @@ public class Arbeitszeit {
         {
             worked = (Calendar.getInstance().getTimeInMillis() - startTime.getTimeInMillis())/1000;
         }
+        Log.d("DEBUG TIME:", String.format("%d",worked));
 
         return worked;
     }
