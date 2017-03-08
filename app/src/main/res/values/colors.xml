@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">@color/colorLightGreen500</color>
-    <color name="colorChosenItem">@color/colorLightGreen200</color>
+    <color name="colorChosenItem">@color/colorLightGreenA400</color>
     <color name="colorTaskbar">@color/colorLightGreen500</color>
     <color name="colorPrimaryDark">@color/colorLightGreen900</color>
     <color name="colorAccent">@color/colorLightGreen800</color>
