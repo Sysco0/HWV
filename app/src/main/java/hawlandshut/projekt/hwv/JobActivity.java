@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -91,7 +92,7 @@ public class JobActivity extends AppCompatActivity
         addTestRowsToDB();
 
         TextView jobID = (TextView)findViewById(R.id.textViewActiveJob);
-        jobID.setText(activeWork.getJob().getKunde().getVorname() + " " + activeWork.getJob().getKunde().getName());
+        jobID.setText("Kunde: " + activeWork.getJob().getKunde().getVorname() + " " + activeWork.getJob().getKunde().getName());
 
         TextView Arbeiter = (TextView)findViewById(R.id.chooseArbeiter);
         TextView Aufmass = (TextView)findViewById(R.id.chooseAufmass);
@@ -151,6 +152,9 @@ public class JobActivity extends AppCompatActivity
             public void onClick(View v) {
                 IntentIntegrator integrator = new IntentIntegrator(JobActivity.this);
                 integrator.initiateScan();
+
+                TextView aufmassBtn = (TextView)findViewById(R.id.chooseAufmass);
+                aufmassBtn.performClick();
             }
         });
 
@@ -203,6 +207,7 @@ public class JobActivity extends AppCompatActivity
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
         if(resultCode != 0){
+            boolean articleFound = false;
             Context ctx = getApplicationContext();
 
             String re = scanResult.getContents();
@@ -217,7 +222,7 @@ public class JobActivity extends AppCompatActivity
             Cursor cursor = db.getArtikelDatenRow(lastScan);
             try {
                 do {
-                    if(cursor == null)
+                    if((cursor == null) || (cursor.getCount() == 0))
                         break;
 
                     String name = cursor.getString(2);
@@ -226,11 +231,21 @@ public class JobActivity extends AppCompatActivity
                     String stdVPE = cursor.getString(1);
 
                     activeWork.addArtikelToAufmass(new Artikel(barcode,stdVPE,name,einheit), 1);//TODO: ADD ANZAHL PICKER
-                    cursor.moveToNext();
+                    articleFound = true;
                 }while(cursor.moveToNext());
 
             } finally {
                 cursor.close();
+            }
+
+            if(!articleFound)
+            {
+                Log.d("Barcode","Article not found in Database!");
+                int duration = Toast.LENGTH_LONG;
+
+                Toast toast = Toast.makeText(ctx, getResources().getString(R.string.article_not_found), duration);
+                toast.setGravity(Gravity.CENTER,0,0);
+                toast.show();
             }
             db.close();
         }else{

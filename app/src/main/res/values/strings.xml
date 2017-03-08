@@ -1,6 +1,4 @@
 <resources>
     <string name="app_name">HWV</string>
-
-
-
+    <string name="article_not_found">Artikel nicht gefunden</string>
 </resources>

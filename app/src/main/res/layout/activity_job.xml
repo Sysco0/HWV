@@ -8,8 +8,9 @@
 
         android:id="@+id/topWorkerBar"
         android:layout_width="match_parent"
-        android:background="@color/colorLightGreen500"
+        android:background="@color/colorPrimary"
         android:layout_height="60dp">
+
         <TextView
             android:paddingLeft="30dp"
             android:layout_width="wrap_content"
@@ -17,21 +18,10 @@
             android:text="A/P 12902109"
             android:gravity="center"
             android:id="@+id/textViewActiveJob"
+            android:textStyle="bold"
             android:layout_alignParentTop="true"
-            android:layout_toLeftOf="@+id/WorkerName"
-            android:textColor="@color/colorTextDark"
-            android:layout_toStartOf="@+id/WorkerName" />
-        <TextView
-            android:paddingLeft="30dp"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="HANS DAMPF"
-            android:gravity="center"
-            android:layout_alignParentTop="true"
-            android:layout_toLeftOf="@+id/startStop"
-            android:layout_toStartOf="@+id/startStop"
-            android:textColor="@color/colorTextDark"
-            android:id="@+id/WorkerName" />
+            android:textColor="@color/colorTextLight" />
+
         <TextView
 
             android:paddingLeft="30dp"
@@ -39,12 +29,23 @@
             android:layout_height="match_parent"
             android:text="STOP START PAUSE ETC"
             android:gravity="center"
+            android:textColor="@color/colorTextDark"
+            android:id="@+id/startStop"
+            android:layout_alignParentTop="true"
+            android:layout_toStartOf="@+id/WorkerName" />
+
+
+        <TextView
+            android:paddingLeft="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="HANS DAMPF"
+            android:gravity="center"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-
             android:textColor="@color/colorTextDark"
-            android:id="@+id/startStop" />
+            android:id="@+id/WorkerName" />
     </RelativeLayout>
 
     <LinearLayout
@@ -66,6 +67,7 @@
                 android:layout_margin="@dimen/textView_margin_button"
                 android:gravity="center"
                 android:id="@+id/chooseArbeiter"
+                android:textStyle="bold"
                 android:textColor="@color/colorTextDark"
                 android:background="@color/colorLightGreen600"
                 android:clickable="true"
@@ -82,6 +84,7 @@
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/textView_margin_button"
                 android:gravity="center"
+                android:textStyle="bold"
                 android:id="@+id/chooseAufmass"
                 android:clickable="true"
                 android:background="@color/colorLightGreen600"
@@ -98,6 +101,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/textView_margin_button"
+                android:textStyle="bold"
                 android:gravity="center"
                 android:background="@color/colorLightGreen600"
                 android:textColor="@color/colorTextDark"
