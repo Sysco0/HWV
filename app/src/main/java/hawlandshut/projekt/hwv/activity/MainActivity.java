@@ -1,11 +1,14 @@
 package hawlandshut.projekt.hwv.activity;
 
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -18,6 +21,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -57,7 +61,30 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse<Lis
     Context mainContext;
 
     @Override
+    public void onResume() {
+        super.onResume();
+        // This registers mMessageReceiver to receive messages.
+        LocalBroadcastManager.getInstance(this)
+                .registerReceiver(mMessageReceiver,
+                        new IntentFilter("hwv-notify"));
+    }
+
+    // Handling the received Intents for the "my-integer" event
+    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // Extract data included in the Intent
+            String message = intent.getStringExtra("message");
+            Toast.makeText(mainContext, message, Toast.LENGTH_SHORT).show();
+        }
+    };
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
+        LocalBroadcastManager.getInstance(this)
+                .registerReceiver(mMessageReceiver,
+                        new IntentFilter("hwv-notify"));
+
         mainContext = this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_active_job);
@@ -227,5 +254,15 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse<Lis
         protected void onPostExecute(String result) {
             delegate.processFinish(TaskRepository.getInstance().list());
         }
+
+        // Handling the received Intents for the "my-integer" event
+        private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                // Extract data included in the Intent
+                int yourInteger = intent.getIntExtra("message",-1/*default value*/);
+            }
+        };
+
     }
 }
