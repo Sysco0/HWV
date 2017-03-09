@@ -4,8 +4,6 @@ package hawlandshut.projekt.hwv.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.ShapeDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -108,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse<Lis
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        //getMenuInflater().inflate(R.menu.menu_active_job, menu);
+        getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
@@ -120,9 +118,9 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse<Lis
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        // if (id == R.id.action_settings) {
-        //     return true;
-        // }
+         if (id == R.id.action_refresh) {
+             return true;
+         }
 
         return super.onOptionsItemSelected(item);
     }
