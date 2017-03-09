@@ -4,6 +4,8 @@ package hawlandshut.projekt.hwv.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.ShapeDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -83,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse<Lis
         AuftragList.setOnItemClickListener(this);
 
         Button startJobButton = (Button) findViewById(R.id.startJobButton);
+        startJobButton.setEnabled(false);
         startJobButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -148,6 +151,11 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse<Lis
         DBCustomer dbCustomer = CustomerRepository.getInstance().getByCustomerId(activeJob.getCustomerId());
         DBAddress dbAddress = AddressRepository.getInstance().getByAddressId(dbCustomer.getAddressId());
 
+        if(activeJob != null)
+        {
+            Button startJobButton = (Button) findViewById(R.id.startJobButton);
+            startJobButton.setEnabled(true);
+        }
 
         TextView viewCustomer = (TextView) findViewById(R.id.showJob_Anrede_textView);
         TextView viewPlace = (TextView) findViewById(R.id.showJob_Plz_Ort_textView);
