@@ -74,7 +74,7 @@ public abstract class BaseRepository<DB extends DBBase> {
 
             String fieldName = columnData[0];
             try {
-                Field tmpField = clazz.getField(fieldName);
+                Field tmpField = clazz.getDeclaredField(fieldName);
                 boolean isAccessible = tmpField.isAccessible();
                 tmpField.setAccessible(true);
                 initialValues.put(columnName, tmpField.get(entity).toString());
@@ -208,7 +208,8 @@ public abstract class BaseRepository<DB extends DBBase> {
                     continue;
                 }
                 try {
-                    Field columnField = clazz.getField(columnData[0]);
+                    Field columnField = clazz.getDeclaredField(columnData[0]);
+                    columnField.setAccessible(true);
                     columnField.set(element, Type.getFieldValue(columnField, tmpCursor.getString(tmpCursor.getColumnIndex(columnName))));
                     hasData = true;
                 } catch (IllegalArgumentException e) {
@@ -253,5 +254,11 @@ public abstract class BaseRepository<DB extends DBBase> {
         return this.pkName;
     }
 
+    public boolean deleteAll(){
+        init();
+        int deleted = DBHelper.instance.getWritableDatabase().delete(this.tableName, null, null);
+        return deleted == 1;
+
+    }
 }
 

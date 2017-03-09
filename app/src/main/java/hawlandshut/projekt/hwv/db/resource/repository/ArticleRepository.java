@@ -1,7 +1,7 @@
 package hawlandshut.projekt.hwv.db.resource.repository;
 
 import hawlandshut.projekt.hwv.db.helper.BaseRepository;
-import hawlandshut.projekt.hwv.db.resource.DBArticle;
+import hawlandshut.projekt.hwv.db.resource.enitiy.DBArticle;
 
 /**
  * Created by Mansi on 07.03.2017.

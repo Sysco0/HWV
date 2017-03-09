@@ -9,9 +9,9 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
+
+import hawlandshut.projekt.hwv.activity.JobActivity;
 
 public class ListAdapterAufmass extends BaseAdapter{
 
@@ -71,17 +71,17 @@ public class ListAdapterAufmass extends BaseAdapter{
         if(aufmassList != null)
         {
             artname.setText(aufmassList.get(position).getArtikel().getName());
-            barcode.setText(aufmassList.get(position).getArtikel().getBarcodeID());
-            stdvpe.setText(aufmassList.get(position).getArtikel().getStandardVPE());
-            einheit.setText(aufmassList.get(position).getArtikel().getEinheit());
+            barcode.setText(aufmassList.get(position).getArtikel().getBarcodeId());
+            stdvpe.setText(aufmassList.get(position).getArtikel().getMinOrderAmount());
+            einheit.setText(aufmassList.get(position).getArtikel().getUnit().getName());
             anzahl.setText(String.format("%d",aufmassList.get(position).getAnzahl()));
         }else if( ((JobActivity)mainActivity).getAufmassList() != null)//TODO: DELETE OR MERGE
         {
             ArrayList<AufmassArtikel> aufmassList2= ((JobActivity)mainActivity).getAufmassList();
             artname.setText(aufmassList2.get(position).getArtikel().getName());
-            barcode.setText(aufmassList2.get(position).getArtikel().getBarcodeID());
-            stdvpe.setText(aufmassList2.get(position).getArtikel().getStandardVPE());
-            einheit.setText(aufmassList2.get(position).getArtikel().getEinheit());
+            barcode.setText(aufmassList2.get(position).getArtikel().getBarcodeId());
+            stdvpe.setText(aufmassList2.get(position).getArtikel().getMinOrderAmount());
+            einheit.setText(aufmassList2.get(position).getArtikel().getUnit().getName());
             anzahl.setText(aufmassList2.get(position).getAnzahl());
         }
 

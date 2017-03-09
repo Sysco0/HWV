@@ -2,6 +2,8 @@ package hawlandshut.projekt.hwv;
 
 import java.util.ArrayList;
 
+import hawlandshut.projekt.hwv.db.resource.enitiy.DBArticle;
+
 /**
  * Created by matthiash on 07.03.2017.
  */
@@ -32,7 +34,7 @@ public class RunningWork {
         return aufmass;
     }
 
-    public void addArtikelToAufmass(Artikel artikel, int anzahl )
+    public void addArtikelToAufmass(DBArticle artikel, int anzahl )
     {
         if(aufmass == null)
         {

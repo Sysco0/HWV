@@ -1,25 +1,29 @@
-package hawlandshut.projekt.hwv;
+package hawlandshut.projekt.hwv.activity;
 
-import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
 
 import java.util.ArrayList;
+
+import hawlandshut.projekt.hwv.Arbeitszeit;
+import hawlandshut.projekt.hwv.AufmassArtikel;
+import hawlandshut.projekt.hwv.AufmassFragement;
+import hawlandshut.projekt.hwv.Auftrag;
+import hawlandshut.projekt.hwv.ChooseWorkerFragment;
+import hawlandshut.projekt.hwv.ListAdapterArbeitszeit;
+import hawlandshut.projekt.hwv.Mitarbeiter;
+import hawlandshut.projekt.hwv.OnNewFragmentCreatedCallback;
+import hawlandshut.projekt.hwv.R;
+import hawlandshut.projekt.hwv.RunningWork;
 
 
 public class JobActivity extends AppCompatActivity
@@ -30,7 +34,6 @@ public class JobActivity extends AppCompatActivity
         View.OnClickListener {
 
     protected String lastScan = "";
-    private View aufmassTxtView;
     private RunningWork activeWork = new RunningWork();
     private Auftrag activeJob;
     private ArrayList<Mitarbeiter> activeWorker = new ArrayList<>();
@@ -62,7 +65,7 @@ public class JobActivity extends AppCompatActivity
         }
     }
 
-    protected void toggleWorker(Mitarbeiter arbeiter)
+    public void toggleWorker(Mitarbeiter arbeiter)
     {
         TextView workerName = (TextView)findViewById(R.id.WorkerName);
         String activeWorkers = "";
@@ -106,10 +109,10 @@ public class JobActivity extends AppCompatActivity
         activeJob = intent.getParcelableExtra("activeJob");
         activeWork.setJob(activeJob);
 
-        //Delete ArticleDatabase
+/*        //Delete ArticleDatabase
         deleteArticleDatabase();
         //Load Article Database
-        addTestRowsToDB();
+        addTestRowsToDB();*/
 
         TextView jobID = (TextView)findViewById(R.id.textViewActiveJob);
         jobID.setText("Kunde: " + activeWork.getJob().getKunde().getVorname() + " " + activeWork.getJob().getKunde().getName());
@@ -204,7 +207,7 @@ public class JobActivity extends AppCompatActivity
     }
 
 
-    private void addTestRowsToDB()
+  /*  private void addTestRowsToDB()
     {
         DBAdapter db = DBAdapter.getsInstance(getApplicationContext());
         db.open();
@@ -221,11 +224,11 @@ public class JobActivity extends AppCompatActivity
         db.open();
         db.deleteAll();
         db.close();
-    }
+    }*/
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
+       /* IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
         if(resultCode != 0){
             boolean articleFound = false;
             Context ctx = getApplicationContext();
@@ -250,6 +253,8 @@ public class JobActivity extends AppCompatActivity
                     String einheit = cursor.getString(4);
                     String stdVPE = cursor.getString(1);
 
+
+
                     activeWork.addArtikelToAufmass(new Artikel(barcode,stdVPE,name,einheit), 1);//TODO: ADD ANZAHL PICKER
                     articleFound = true;
                 }while(cursor.moveToNext());
@@ -270,7 +275,7 @@ public class JobActivity extends AppCompatActivity
             db.close();
         }else{
             Log.d("Barcode", "Nothing scanned");
-        }
+        }*/
     }
 
     public ArrayList<AufmassArtikel> getAufmassList() {

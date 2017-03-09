@@ -9,12 +9,9 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
-
-import java.lang.reflect.Type;
 import java.util.ArrayList;
+
+import hawlandshut.projekt.hwv.activity.JobActivity;
 
 public class ListAdapterArbeiter extends BaseAdapter{
 

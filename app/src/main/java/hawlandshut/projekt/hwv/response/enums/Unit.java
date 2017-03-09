@@ -1,4 +1,4 @@
-package hawlandshut.projekt.hwv.enums;
+package hawlandshut.projekt.hwv.response.enums;
 
 /**
  * Created by Mansi on 08.03.2017.

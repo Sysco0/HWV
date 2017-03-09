@@ -1,4 +1,4 @@
-package hawlandshut.projekt.hwv.db.resource;
+package hawlandshut.projekt.hwv.db.resource.enitiy;
 
 import hawlandshut.projekt.hwv.db.helper.DBBase;
 import hawlandshut.projekt.hwv.db.helper.annotation.Column;
@@ -14,19 +14,15 @@ public class DBArticle extends DBBase {
 
     @PrimaryKey
     @Column(name = "id")
-    public Long articleId;
-
+    private Long articleId;
     @Column(name = "barcode_id", unique = true)
-    public String barcodeId;
-
+    private String barcodeId;
     @Column(name = "min_order_amount",nullable = false)
-    public Integer minOrderAmount;
-
+    private Integer minOrderAmount;
     @Column(name = "name",nullable = false)
-    public String name;
-
+    private String name;
     @Column(name = "unit",nullable = false)
-    public Unit unit;
+    private Unit unit;
 
     public Long getArticleId() {
         return articleId;

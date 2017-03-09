@@ -9,19 +9,19 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
-
-import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
 
-public class ListAdapterAuftrag extends BaseAdapter{
+import hawlandshut.projekt.hwv.db.resource.enitiy.DBCustomer;
+import hawlandshut.projekt.hwv.db.resource.enitiy.DBTask;
+import hawlandshut.projekt.hwv.db.resource.repository.CustomerRepository;
 
-    private ArrayList<Auftrag> auftragsliste;
+public class ListAdapterAuftrag extends BaseAdapter {
+
     private final Context ctx;
     private final Activity mainActivity;
     private final LayoutInflater mInflater;
+    private List<DBTask> tasks;
     private int selected;
     private SharedPreferences prefs;
 
@@ -30,39 +30,23 @@ public class ListAdapterAuftrag extends BaseAdapter{
         mainActivity = act;
         mInflater = LayoutInflater.from(ctx);
         prefs = ctx.getSharedPreferences("hawlandshut.projekt.hwv", Context.MODE_PRIVATE);
-        initAuftragsListe();
+        tasks = new ArrayList<>();
     }
 
-    public void updateData(){
-        auftragsliste = new ArrayList<>();
-        String jsonStr = prefs.getString("jobdata", "");
-        if(!jsonStr.isEmpty())
-        {
-            Type listofAuftrag = new TypeToken<ArrayList<Auftrag>>(){}.getType();
-
-            //String s = gson.toJson(list, listOfTestObject);
-            Gson gson = new GsonBuilder().create();
-
-            auftragsliste = gson.fromJson(jsonStr, listofAuftrag);
-
-        }
+    public void updateData(List<DBTask> dbTasks) {
+        tasks = dbTasks;
 
     }
-
-    private void initAuftragsListe(){
-        updateData();
-    }
-
 
 
     @Override
     public int getCount() {
-        return auftragsliste.size();
+        return tasks.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return auftragsliste.get(position);
+        return tasks.get(position);
     }
 
     @Override
@@ -72,30 +56,29 @@ public class ListAdapterAuftrag extends BaseAdapter{
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        final View v = mInflater.inflate(R.layout.auftrag_row,parent,false);
-        TextView nachn = (TextView)v.findViewById(R.id.AuftragRow_nachname_textView);
-        TextView vorn = (TextView)v.findViewById(R.id.AuftragRow_vorname_textView);
-        TextView status = (TextView)v.findViewById(R.id.AuftragRow_status_textView);
-        TextView besch = (TextView)v.findViewById(R.id.beschreibung);
+        final View v = mInflater.inflate(R.layout.auftrag_row, parent, false);
+        TextView nachn = (TextView) v.findViewById(R.id.AuftragRow_nachname_textView);
+        TextView vorn = (TextView) v.findViewById(R.id.AuftragRow_vorname_textView);
+        TextView status = (TextView) v.findViewById(R.id.AuftragRow_status_textView);
+        TextView besch = (TextView) v.findViewById(R.id.beschreibung);
 
-
-        nachn.setText(auftragsliste.get(position).getKunde().getName());
-        vorn.setText(auftragsliste.get(position).getKunde().getVorname());
-        String statusText = "Status: "+ auftragsliste.get(position).getAuftrStat();
+        DBTask task = tasks.get(position);
+        DBCustomer customer = CustomerRepository.getInstance().getByCustomerId(task.getCustomerId());
+        nachn.setText(customer.getFirstName());
+        vorn.setText(customer.getLastName());
+        String statusText = "Status: " + task.getState();
         status.setText(statusText);
 
-        besch.setText(auftragsliste.get(position).getBeschreibung());
+        besch.setText(task.getDescription());
 
-        if(selected == position)
-        {
+        if (selected == position) {
             v.setBackgroundColor(mainActivity.getResources().getColor(R.color.backgroundSelected));
         }
 
         return v;
     }
 
-    public void setSelectedItem(int position)
-    {
+    public void setSelectedItem(int position) {
         selected = position;
     }
 

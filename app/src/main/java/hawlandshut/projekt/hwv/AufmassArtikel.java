@@ -2,26 +2,28 @@ package hawlandshut.projekt.hwv;
 
 import java.util.Calendar;
 
+import hawlandshut.projekt.hwv.db.resource.enitiy.DBArticle;
+
 /**
  * Created by matthiash on 07.03.2017.
  */
 
 public class AufmassArtikel {
-    private Artikel artikel;
+    private DBArticle artikel;
     private Calendar buchungsZeit;
     private int anzahl;
 
-    public AufmassArtikel(Artikel artikel, int anzahl) {
+    public AufmassArtikel(DBArticle artikel, int anzahl) {
         this.artikel = artikel;
         buchungsZeit = Calendar.getInstance();
         this.anzahl = anzahl;
     }
 
-    public Artikel getArtikel() {
+    public DBArticle getArtikel() {
         return artikel;
     }
 
-    public void setArtikel(Artikel artikel) {
+    public void setArtikel(DBArticle artikel) {
         this.artikel = artikel;
     }
 

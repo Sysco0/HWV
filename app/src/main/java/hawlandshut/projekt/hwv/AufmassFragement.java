@@ -9,8 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
+import hawlandshut.projekt.hwv.activity.JobActivity;
 
 
 /**
