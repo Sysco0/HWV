@@ -21,7 +21,6 @@ import java.util.List;
 
 import hawlandshut.projekt.hwv.R;
 import hawlandshut.projekt.hwv.activity.callback.OnNewFragmentCreatedCallback;
-import hawlandshut.projekt.hwv.adpater.ListTaskAdapter;
 import hawlandshut.projekt.hwv.adpater.ListTaskArticleAdapter;
 import hawlandshut.projekt.hwv.adpater.ListWorkeRangeAdapter;
 import hawlandshut.projekt.hwv.db.resource.enitiy.DBAddress;
@@ -86,8 +85,22 @@ public class JobActivity extends AppCompatActivity
         TextView workerName = (TextView) findViewById(R.id.WorkerName);
 
         if (activeWorker.contains(dbWorker)) {
+            DBTaskWorker dbTaskWorker = TaskWorkerRepository.getInstance().getByWorkerIdAndTaskIdTime(dbWorker.getWorkerId(),taskId);
+            if(null != dbTaskWorker){
+                dbTaskWorker.setEndTime(System.currentTimeMillis());
+                TaskWorkerRepository.getInstance().save(dbTaskWorker);
+            }
+
             activeWorker.remove(dbWorker);
         } else {
+            DBTaskWorker dbTaskWorker = new DBTaskWorker();
+            dbTaskWorker.setTaskId(taskId);
+            dbTaskWorker.setSync(true);
+            dbTaskWorker.setWorkerId(dbWorker.getWorkerId());
+            long time = System.currentTimeMillis();
+            dbTaskWorker.setStartTime(time);
+            dbTaskWorker.setEndTime(time);
+            TaskWorkerRepository.getInstance().create(dbTaskWorker);
             activeWorker.add(dbWorker);
         }
 

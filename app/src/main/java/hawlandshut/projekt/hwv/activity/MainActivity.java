@@ -34,6 +34,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
+import java.util.Objects;
 
 import hawlandshut.projekt.hwv.R;
 import hawlandshut.projekt.hwv.activity.callback.AsyncResponse;
@@ -258,7 +259,7 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse<Lis
                 }
                 List<DBTaskWorker> dbTaskWorkers = taskWorkerRepository.list();
                 for (DBTaskWorker dbTaskWorker : dbTaskWorkers) {
-                    if (!dbTaskWorker.isSync()) {
+                    if (!dbTaskWorker.isSync() && !Objects.equals(dbTaskWorker.getEndTime(), dbTaskWorker.getStartTime())) {
                         getJson(String.format("https://hwv.mad2man.com/api/work/time?workerId=%d&taskId=%d&startTime=%d&endTime=%d&",
                                 dbTaskWorker.getWorkerId(), dbTaskWorker.getTaskId(), dbTaskWorker.getStartTime(), dbTaskWorker.getEndTime()));
                         taskWorkerRepository.delete(dbTaskWorker.getId());

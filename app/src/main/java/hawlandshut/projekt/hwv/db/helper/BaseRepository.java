@@ -115,10 +115,15 @@ public abstract class BaseRepository<DB extends DBBase> {
 
             String fieldName = columnData[0];
             try {
+                Field tmpField = clazz.getDeclaredField(fieldName);
+                boolean isAccessible = tmpField.isAccessible();
+                tmpField.setAccessible(true);
                 if (columnName.equals(this.pkName)) {
-                    pk = (Long) clazz.getDeclaredField(fieldName).get(entity);
+
+                    pk = (Long) tmpField.get(entity);
                 }
-                initialValues.put(columnName, clazz.getDeclaredField(fieldName).get(entity).toString());
+                initialValues.put(columnName, tmpField.get(entity).toString());
+                tmpField.setAccessible(isAccessible);
             } catch (NullPointerException e) {
                 e.printStackTrace();
                 continue;
@@ -254,13 +259,12 @@ public abstract class BaseRepository<DB extends DBBase> {
         return this.pkName;
     }
 
-    public boolean deleteAll(){
+    public boolean deleteAll() {
         init();
         int deleted = DBHelper.instance.getWritableDatabase().delete(this.tableName, null, null);
         return deleted == 1;
 
     }
-
 
 
 }

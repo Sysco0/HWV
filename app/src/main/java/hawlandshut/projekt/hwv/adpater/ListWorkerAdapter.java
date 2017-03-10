@@ -41,8 +41,6 @@ public class ListWorkerAdapter extends BaseAdapter{
 
     public void updateData(){
         workerList = WorkerRepository.getInstance().list();
-
-
     }
 
     private void initAuftragsListe(){

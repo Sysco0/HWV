@@ -12,6 +12,10 @@ import hawlandshut.projekt.hwv.db.resource.enitiy.DBTaskWorker;
 public class TaskWorkerRepository extends BaseRepository<DBTaskWorker> {
     private static TaskWorkerRepository instance = null;
 
+    private TaskWorkerRepository() {
+        super(DBTaskWorker.class);
+    }
+
     public static TaskWorkerRepository getInstance() {
         if (null == instance) {
             instance = new TaskWorkerRepository();
@@ -20,12 +24,8 @@ public class TaskWorkerRepository extends BaseRepository<DBTaskWorker> {
         return instance;
     }
 
-    private TaskWorkerRepository() {
-        super(DBTaskWorker.class);
-    }
-
     public void deleteAllSync() {
-        this.getWriteableDatabase().delete(this.tableName,"sync=?",new String[]{"true"});
+        this.getWriteableDatabase().delete(this.tableName, "sync=?", new String[]{"true"});
     }
 
     public List<DBTaskWorker> getByTaskId(Long taskId) {
@@ -39,6 +39,14 @@ public class TaskWorkerRepository extends BaseRepository<DBTaskWorker> {
     }
 
     public List<DBTaskWorker> getByWorkerIdAndTaskId(Long workerId, long taskId) {
-        return this.transform(this.getReadableDatabase().rawQuery("SELECT * FROM " + this.tableName + " WHERE worker_id=? AND task_id=?", new String[]{Long.toString(workerId),Long.toString(taskId)}));
+        return this.transform(this.getReadableDatabase().rawQuery("SELECT * FROM " + this.tableName + " WHERE worker_id=? AND task_id=?", new String[]{Long.toString(workerId), Long.toString(taskId)}));
+    }
+
+    public DBTaskWorker getByWorkerIdAndTaskIdTime(Long workerId, Long taskId) {
+        List<DBTaskWorker> dbworkers = this.transform(this.getReadableDatabase().rawQuery("SELECT * FROM " + this.tableName + " WHERE worker_id=? AND task_id=? AND start_time = end_time", new String[]{Long.toString(workerId), Long.toString(taskId)}));
+        if (dbworkers == null) {
+            return null;
+        }
+        return dbworkers.get(0);
     }
 }
