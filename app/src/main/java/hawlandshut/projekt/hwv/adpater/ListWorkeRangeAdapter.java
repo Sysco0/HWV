@@ -40,10 +40,10 @@ public class ListWorkeRangeAdapter extends BaseAdapter {
         setWorkTime(TaskWorkerRepository.getInstance().getByTaskId(taskId));
     }
 
-    public void setWorkTime(List<DBTaskWorker> _newAufmass){
+    public void setWorkTime(List<DBTaskWorker> _newWorkRange){
 
-        if(_newAufmass != null)
-            workRange = _newAufmass;
+        if(_newWorkRange != null)
+            workRange = _newWorkRange;
     }
     @Override
     public int getCount() {

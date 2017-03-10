@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -20,6 +21,8 @@ import java.util.List;
 
 import hawlandshut.projekt.hwv.R;
 import hawlandshut.projekt.hwv.activity.callback.OnNewFragmentCreatedCallback;
+import hawlandshut.projekt.hwv.adpater.ListTaskAdapter;
+import hawlandshut.projekt.hwv.adpater.ListTaskArticleAdapter;
 import hawlandshut.projekt.hwv.adpater.ListWorkeRangeAdapter;
 import hawlandshut.projekt.hwv.db.resource.enitiy.DBAddress;
 import hawlandshut.projekt.hwv.db.resource.enitiy.DBArticle;
@@ -120,6 +123,23 @@ public class JobActivity extends AppCompatActivity
         TextView Aufmass = (TextView) findViewById(R.id.chooseAufmass);
         TextView BarcodeButton = (TextView) findViewById(R.id.barcodeScannerButton);
         TextView jobID = (TextView) findViewById(R.id.textViewActiveJob);
+
+        Button pause = (Button) findViewById(R.id.iconPause);
+        Button stop = (Button ) findViewById(R.id.iconStop);
+
+        stop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        pause.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         if (taskId > -1) {
             dbTask = TaskRepository.getInstance().getByTaskId(taskId);
@@ -231,7 +251,12 @@ public class JobActivity extends AppCompatActivity
                 dbTaskArticle.setTaskId(taskId);
                 dbTaskArticle.setArticleId(article.getArticleId());
                 TaskArticleRepository.getInstance().create(dbTaskArticle);
-             Toast.makeText(this,  String.format("Article %s (%s) added to task",article.getName(),re), Toast.LENGTH_SHORT).show();
+
+                ListTaskArticleAdapter tasks = (ListTaskArticleAdapter)((ListView)findViewById(R.id.listViewAufmass)).getAdapter();
+                tasks.setAufmassList(TaskArticleRepository.getInstance().getByTaskId(taskId));
+                tasks.notifyDataSetChanged();
+
+                Toast.makeText(this,  String.format("Article %s (%s) added to task",article.getName(),re), Toast.LENGTH_SHORT).show();
             }else{
                 Toast.makeText(this, String.format("Article with barcode %s not found",re), Toast.LENGTH_SHORT).show();
             }

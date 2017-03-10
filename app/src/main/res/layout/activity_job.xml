@@ -23,16 +23,26 @@
             android:layout_alignParentTop="true"
             android:textColor="@color/colorTextLight" />
 
-        <TextView
-            android:paddingLeft="30dp"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="STOP START PAUSE ETC"
-            android:gravity="center"
-            android:textColor="@color/colorTextDark"
-            android:id="@+id/startStop"
             android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal"
+            >
+        <Button
+            android:background="@drawable/ic_pause"
+            android:gravity="center"
+            android:id="@+id/iconPause"
+            android:layout_height="match_parent"
+            android:layout_width="64dp"/>
+        <Button
+            android:background="@drawable/ic_stop"
+            android:gravity="center"
+            android:id="@+id/iconStop"
+            android:layout_height="match_parent"
+            android:layout_width="64dp"/>
+        </LinearLayout>
 
         <TextView
             android:paddingLeft="30dp"
