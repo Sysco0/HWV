@@ -14,16 +14,18 @@ import com.google.zxing.integration.android.IntentIntegrator;
 
 import java.util.ArrayList;
 
-import hawlandshut.projekt.hwv.Arbeitszeit;
-import hawlandshut.projekt.hwv.AufmassArtikel;
 import hawlandshut.projekt.hwv.AufmassFragement;
-import hawlandshut.projekt.hwv.Auftrag;
-import hawlandshut.projekt.hwv.ChooseWorkerFragment;
 import hawlandshut.projekt.hwv.ListAdapterArbeitszeit;
 import hawlandshut.projekt.hwv.Mitarbeiter;
 import hawlandshut.projekt.hwv.OnNewFragmentCreatedCallback;
 import hawlandshut.projekt.hwv.R;
-import hawlandshut.projekt.hwv.RunningWork;
+import hawlandshut.projekt.hwv.db.resource.enitiy.DBAddress;
+import hawlandshut.projekt.hwv.db.resource.enitiy.DBCustomer;
+import hawlandshut.projekt.hwv.db.resource.enitiy.DBTask;
+import hawlandshut.projekt.hwv.db.resource.repository.AddressRepository;
+import hawlandshut.projekt.hwv.db.resource.repository.CustomerRepository;
+import hawlandshut.projekt.hwv.db.resource.repository.TaskRepository;
+import hawlandshut.projekt.hwv.fragment.ChooseWorkerFragment;
 
 
 public class JobActivity extends AppCompatActivity
@@ -34,8 +36,10 @@ public class JobActivity extends AppCompatActivity
         View.OnClickListener {
 
     protected String lastScan = "";
-    private RunningWork activeWork = new RunningWork();
-    private Auftrag activeJob;
+    private DBTask dbTask;
+    private DBCustomer dbCustomer;
+    private DBAddress dbAddress;
+
     private ArrayList<Mitarbeiter> activeWorker = new ArrayList<>();
 
     public ArrayList<Integer> getWorkingPositions() {
@@ -90,9 +94,9 @@ public class JobActivity extends AppCompatActivity
             workerName.setText(activeWorkers);
         }
 
-        activeWork.setNewArbeitsZeit(arbeiter);//TODO: REMOVE
+     //   activeWork.setNewArbeitsZeit(arbeiter);//TODO: REMOVE
         ListView az = (ListView)findViewById(R.id.recordedWork);
-        ((ListAdapterArbeitszeit)az.getAdapter()).setArbeitszeitList(activeWork.getWorkedHours());
+     //   ((ListAdapterArbeitszeit)az.getAdapter()).setArbeitszeitList(activeWork.getWorkedHours());
         ((ListAdapterArbeitszeit)az.getAdapter()).notifyDataSetChanged();
 
     }
@@ -101,13 +105,16 @@ public class JobActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_job);
-
-        //aufmassList = new ArrayList<>();
-        activeWork.setAufmass(new ArrayList<AufmassArtikel>());
-
         Intent intent = getIntent();
-        activeJob = intent.getParcelableExtra("activeJob");
-        activeWork.setJob(activeJob);
+        Long taskId = intent.getLongExtra(Variables.ACTIVE_TASK_ID, -1L);
+        if(taskId >-1){
+            dbTask = TaskRepository.getInstance().getByTaskId(taskId);
+            dbCustomer = CustomerRepository.getInstance().getByCustomerId(dbTask.getCustomerId());
+            dbAddress = AddressRepository.getInstance().getByAddressId(dbCustomer.getAddressId());
+        }
+
+       // activeWork.setAufmass(new ArrayList<AufmassArtikel>());
+
 
 /*        //Delete ArticleDatabase
         deleteArticleDatabase();
@@ -115,7 +122,7 @@ public class JobActivity extends AppCompatActivity
         addTestRowsToDB();*/
 
         TextView jobID = (TextView)findViewById(R.id.textViewActiveJob);
-        jobID.setText("Kunde: " + activeWork.getJob().getKunde().getVorname() + " " + activeWork.getJob().getKunde().getName());
+  //      jobID.setText("Kunde: " + activeWork.getJob().getKunde().getVorname() + " " + activeWork.getJob().getKunde().getName());
 
         TextView Arbeiter = (TextView)findViewById(R.id.chooseArbeiter);
         TextView Aufmass = (TextView)findViewById(R.id.chooseAufmass);
@@ -278,10 +285,10 @@ public class JobActivity extends AppCompatActivity
         }*/
     }
 
-    public ArrayList<AufmassArtikel> getAufmassList() {
-        return activeWork.getAufmass();
-    }
-    public ArrayList<Arbeitszeit> getArbeitszeitList() { return activeWork.getWorkedHours(); }
+  //  public ArrayList<AufmassArtikel> getAufmassList() {
+    //    return activeWork.getAufmass();
+ //   }
+   // public ArrayList<Arbeitszeit> getArbeitszeitList() { return activeWork.getWorkedHours(); }
 
     //SAME LISTENER FOR BOTH FRAGMENTS!?
     @Override

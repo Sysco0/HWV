@@ -14,6 +14,8 @@ public class DBArticle extends DBBase {
 
     @PrimaryKey
     @Column(name = "id")
+    private Long id;
+    @Column(name = "article_id")
     private Long articleId;
     @Column(name = "barcode_id", unique = true)
     private String barcodeId;
@@ -23,6 +25,14 @@ public class DBArticle extends DBBase {
     private String name;
     @Column(name = "unit",nullable = false)
     private Unit unit;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public Long getArticleId() {
         return articleId;
@@ -36,8 +46,8 @@ public class DBArticle extends DBBase {
         return barcodeId;
     }
 
-    public void setBarcodeId(String barcodeID) {
-        this.barcodeId = barcodeID;
+    public void setBarcodeId(String barcodeId) {
+        this.barcodeId = barcodeId;
     }
 
     public Integer getMinOrderAmount() {
@@ -62,9 +72,5 @@ public class DBArticle extends DBBase {
 
     public void setUnit(Unit unit) {
         this.unit = unit;
-    }
-
-    public String toString(){
-        return String.format("id=%d, name=%s, min order amount=%d, unit=%s, barcode=%s", articleId,name,minOrderAmount,unit,barcodeId);
     }
 }

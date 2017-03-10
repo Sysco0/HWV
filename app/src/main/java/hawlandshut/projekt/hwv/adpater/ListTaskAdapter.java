@@ -1,4 +1,4 @@
-package hawlandshut.projekt.hwv;
+package hawlandshut.projekt.hwv.adpater;
 
 import android.app.Activity;
 import android.content.Context;
@@ -12,11 +12,12 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import hawlandshut.projekt.hwv.R;
 import hawlandshut.projekt.hwv.db.resource.enitiy.DBCustomer;
 import hawlandshut.projekt.hwv.db.resource.enitiy.DBTask;
 import hawlandshut.projekt.hwv.db.resource.repository.CustomerRepository;
 
-public class ListAdapterAuftrag extends BaseAdapter {
+public class ListTaskAdapter extends BaseAdapter {
 
     private final Context ctx;
     private final Activity mainActivity;
@@ -25,7 +26,7 @@ public class ListAdapterAuftrag extends BaseAdapter {
     private int selected;
     private SharedPreferences prefs;
 
-    public ListAdapterAuftrag(Context context, Activity act) {
+    public ListTaskAdapter(Context context, Activity act) {
         ctx = context;
         mainActivity = act;
         mInflater = LayoutInflater.from(ctx);

@@ -1,4 +1,4 @@
-package hawlandshut.projekt.hwv;
+package hawlandshut.projekt.hwv.fragment;
 
 import android.content.Context;
 import android.net.Uri;
@@ -10,6 +10,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import hawlandshut.projekt.hwv.ListAdapterArbeiter;
+import hawlandshut.projekt.hwv.ListAdapterArbeitszeit;
+import hawlandshut.projekt.hwv.Mitarbeiter;
+import hawlandshut.projekt.hwv.R;
 import hawlandshut.projekt.hwv.activity.JobActivity;
 
 
@@ -22,20 +26,9 @@ import hawlandshut.projekt.hwv.activity.JobActivity;
  * create an instance of this fragment.
  */
 public class ChooseWorkerFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     private OnFragmentInteractionListener mListener;
 
-    public ChooseWorkerFragment() {
-        // Required empty public constructor
-    }
 
     /**
      * Use this factory method to create a new instance of
@@ -43,7 +36,6 @@ public class ChooseWorkerFragment extends Fragment {
      *
      * @return A new instance of fragment ChooseWorkerFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static ChooseWorkerFragment newInstance() {
         ChooseWorkerFragment fragment = new ChooseWorkerFragment();
         Bundle args = new Bundle();
@@ -51,27 +43,18 @@ public class ChooseWorkerFragment extends Fragment {
         return fragment;
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_choose_worker, container, false);
+        View workerChooseView = inflater.inflate(R.layout.fragment_choose_worker, container, false);
 
-        ListView lv = (ListView)rootView.findViewById(R.id.workerList);
+        ListView workerListView = (ListView)workerChooseView.findViewById(R.id.workerList);
         ListAdapterArbeiter arbeiter = new ListAdapterArbeiter(getContext(),getActivity());
-        lv.setAdapter(arbeiter);
+        workerListView.setAdapter(arbeiter);
         arbeiter.setWorkingPositions(((JobActivity)getActivity()).getWorkingPositions());
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        workerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 ((JobActivity)getActivity()).toogleWorkingPosition(position);//setSelectedItem(position);
@@ -83,14 +66,14 @@ public class ChooseWorkerFragment extends Fragment {
             }
         });
 
-        ListView az = (ListView)rootView.findViewById(R.id.recordedWork);
+        ListView az = (ListView)workerChooseView.findViewById(R.id.recordedWork);
         ListAdapterArbeitszeit work = new ListAdapterArbeitszeit(getContext(),getActivity());
         az.setAdapter(work);
         work.setArbeitszeitList(((JobActivity)getActivity()).getArbeitszeitList());
         work.notifyDataSetChanged();
         //OnLongClickListener Delete Row
 
-        return rootView;
+        return workerChooseView;
     }
 
 

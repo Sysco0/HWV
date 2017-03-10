@@ -9,22 +9,22 @@ import hawlandshut.projekt.hwv.db.resource.enitiy.DBTask;
  * Created by Mansi on 07.03.2017.
  */
 
-public class TaskRepository extends BaseRepository<DBTask> {
-    private static TaskRepository instance = null;
+public class WorkerRepository extends BaseRepository<DBTask> {
+    private static WorkerRepository instance = null;
 
-    public static TaskRepository getInstance() {
+    public static WorkerRepository getInstance() {
         if (null == instance) {
-            instance = new TaskRepository();
+            instance = new WorkerRepository();
 
         }
         return instance;
     }
 
-    private TaskRepository() {
+    private WorkerRepository() {
         super(DBTask.class);
     }
 
-    public DBTask getByTaskId(Long taskId) {
+    public DBTask getByWorkerId(Long taskId) {
         List<DBTask> dbTasks = this.transform(this.getReadableDatabase().rawQuery("SELECT * FROM " + this.tableName + " WHERE task_id=?", new String[]{Long.toString(taskId)}));
         if (dbTasks.isEmpty()) {
             return null;

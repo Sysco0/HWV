@@ -19,6 +19,30 @@ public enum Unit {
         this.name = name;
     }
 
+    public static Unit convert(hawlandshut.projekt.hwv.response.enums.Unit unit) {
+        if(null == unit){
+            return null;
+        }
+        switch (unit){
+            case HOUR:
+                return HOUR;
+            case KILOGRAM:
+                return KILOGRAM;
+            case METER:
+                return METER;
+            case METER_2:
+                return METER_2;
+            case METER_3:
+                return METER_3;
+            case MINUTE:
+                return MINUTE;
+            case SECOND:
+                return SECOND;
+            case UNIT:
+                default:
+                return UNIT;
+        }
+    }
 
     public String getName() {
         return name;
