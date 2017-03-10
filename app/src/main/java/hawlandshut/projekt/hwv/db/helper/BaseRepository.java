@@ -116,9 +116,9 @@ public abstract class BaseRepository<DB extends DBBase> {
             String fieldName = columnData[0];
             try {
                 if (columnName.equals(this.pkName)) {
-                    pk = (Long) clazz.getField(fieldName).get(entity);
+                    pk = (Long) clazz.getDeclaredField(fieldName).get(entity);
                 }
-                initialValues.put(columnName, clazz.getField(fieldName).get(entity).toString());
+                initialValues.put(columnName, clazz.getDeclaredField(fieldName).get(entity).toString());
             } catch (NullPointerException e) {
                 e.printStackTrace();
                 continue;
@@ -260,5 +260,8 @@ public abstract class BaseRepository<DB extends DBBase> {
         return deleted == 1;
 
     }
+
+
+
 }
 

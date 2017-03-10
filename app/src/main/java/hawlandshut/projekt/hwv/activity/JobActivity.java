@@ -5,42 +5,53 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import hawlandshut.projekt.hwv.AufmassFragement;
-import hawlandshut.projekt.hwv.ListAdapterArbeitszeit;
-import hawlandshut.projekt.hwv.Mitarbeiter;
-import hawlandshut.projekt.hwv.OnNewFragmentCreatedCallback;
 import hawlandshut.projekt.hwv.R;
+import hawlandshut.projekt.hwv.activity.callback.OnNewFragmentCreatedCallback;
+import hawlandshut.projekt.hwv.adpater.ListWorkeRangeAdapter;
 import hawlandshut.projekt.hwv.db.resource.enitiy.DBAddress;
+import hawlandshut.projekt.hwv.db.resource.enitiy.DBArticle;
 import hawlandshut.projekt.hwv.db.resource.enitiy.DBCustomer;
 import hawlandshut.projekt.hwv.db.resource.enitiy.DBTask;
+import hawlandshut.projekt.hwv.db.resource.enitiy.DBTaskArticle;
+import hawlandshut.projekt.hwv.db.resource.enitiy.DBTaskWorker;
+import hawlandshut.projekt.hwv.db.resource.enitiy.DBWorker;
 import hawlandshut.projekt.hwv.db.resource.repository.AddressRepository;
+import hawlandshut.projekt.hwv.db.resource.repository.ArticleRepository;
 import hawlandshut.projekt.hwv.db.resource.repository.CustomerRepository;
+import hawlandshut.projekt.hwv.db.resource.repository.TaskArticleRepository;
 import hawlandshut.projekt.hwv.db.resource.repository.TaskRepository;
+import hawlandshut.projekt.hwv.db.resource.repository.TaskWorkerRepository;
 import hawlandshut.projekt.hwv.fragment.ChooseWorkerFragment;
+import hawlandshut.projekt.hwv.fragment.TaskArticleFragement;
 
 
 public class JobActivity extends AppCompatActivity
         implements
         ChooseWorkerFragment.OnFragmentInteractionListener,
-        AufmassFragement.OnFragmentInteractionListener,
+        TaskArticleFragement.OnFragmentInteractionListener,
         OnNewFragmentCreatedCallback,
         View.OnClickListener {
 
+    private Long taskId;
     protected String lastScan = "";
     private DBTask dbTask;
     private DBCustomer dbCustomer;
     private DBAddress dbAddress;
 
-    private ArrayList<Mitarbeiter> activeWorker = new ArrayList<>();
+    private List<DBWorker> activeWorker = new ArrayList<>();
 
     public ArrayList<Integer> getWorkingPositions() {
         return workingPositions;
@@ -49,13 +60,12 @@ public class JobActivity extends AppCompatActivity
     private ArrayList<Integer> workingPositions = new ArrayList<>();
 
 
-    protected void setActiveFragment(int fragmentNr)
-    {
-        RelativeLayout arbeiterBG = (RelativeLayout)findViewById(R.id.chooseArbeiterBG);
-        RelativeLayout aufmassBG = (RelativeLayout)findViewById(R.id.chooseAufmassBG);
-        RelativeLayout barcodeButtonBG = (RelativeLayout)findViewById(R.id.barcodeScannerButtonBG);
+    protected void setActiveFragment(int fragmentNr) {
+        RelativeLayout arbeiterBG = (RelativeLayout) findViewById(R.id.chooseArbeiterBG);
+        RelativeLayout aufmassBG = (RelativeLayout) findViewById(R.id.chooseAufmassBG);
+        RelativeLayout barcodeButtonBG = (RelativeLayout) findViewById(R.id.barcodeScannerButtonBG);
 
-        switch (fragmentNr){
+        switch (fragmentNr) {
             case 1:
                 arbeiterBG.setBackgroundColor(getColor(R.color.backgroundSelected));
                 aufmassBG.setBackgroundColor(getColor(R.color.backgroundGrey));
@@ -69,35 +79,33 @@ public class JobActivity extends AppCompatActivity
         }
     }
 
-    public void toggleWorker(Mitarbeiter arbeiter)
-    {
-        TextView workerName = (TextView)findViewById(R.id.WorkerName);
+    public void toggleWorker(DBWorker dbWorker) {
+        TextView workerName = (TextView) findViewById(R.id.WorkerName);
+
+        if (activeWorker.contains(dbWorker)) {
+            activeWorker.remove(dbWorker);
+        } else {
+            activeWorker.add(dbWorker);
+        }
+
         String activeWorkers = "";
-
-        if(activeWorker.contains(arbeiter))
-        {
-            activeWorker.remove(arbeiter);
-        }else
-        {
-            activeWorker.add(arbeiter);
-        }
-
-        for (Mitarbeiter ma: activeWorker)
-        {
-            if(!activeWorkers.isEmpty())
+        List<DBTaskWorker> dbTaskWorkers = new ArrayList<>();
+        TaskWorkerRepository taskWorkerRepository = TaskWorkerRepository.getInstance();
+        for (DBWorker ma : activeWorker) {
+            if (!activeWorkers.isEmpty())
                 activeWorkers += ", ";
-            activeWorkers += ma.getKuerzel();
+            activeWorkers += ma.getLastName();
+            dbTaskWorkers.addAll(taskWorkerRepository.getByWorkerIdAndTaskId(ma.getWorkerId(),taskId));
         }
 
-        if(workerName != null)
-        {
+        if (workerName != null) {
             workerName.setText(activeWorkers);
         }
 
-     //   activeWork.setNewArbeitsZeit(arbeiter);//TODO: REMOVE
-        ListView az = (ListView)findViewById(R.id.recordedWork);
-     //   ((ListAdapterArbeitszeit)az.getAdapter()).setArbeitszeitList(activeWork.getWorkedHours());
-        ((ListAdapterArbeitszeit)az.getAdapter()).notifyDataSetChanged();
+
+        ListView az = (ListView) findViewById(R.id.recordedWork);
+        ((ListWorkeRangeAdapter) az.getAdapter()).setWorkTime(dbTaskWorkers);
+        ((ListWorkeRangeAdapter) az.getAdapter()).notifyDataSetChanged();
 
     }
 
@@ -106,28 +114,21 @@ public class JobActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_job);
         Intent intent = getIntent();
-        Long taskId = intent.getLongExtra(Variables.ACTIVE_TASK_ID, -1L);
-        if(taskId >-1){
+         taskId = intent.getLongExtra(Variables.ACTIVE_TASK_ID, -1L);
+
+        TextView Arbeiter = (TextView) findViewById(R.id.chooseArbeiter);
+        TextView Aufmass = (TextView) findViewById(R.id.chooseAufmass);
+        TextView BarcodeButton = (TextView) findViewById(R.id.barcodeScannerButton);
+        TextView jobID = (TextView) findViewById(R.id.textViewActiveJob);
+
+        if (taskId > -1) {
             dbTask = TaskRepository.getInstance().getByTaskId(taskId);
             dbCustomer = CustomerRepository.getInstance().getByCustomerId(dbTask.getCustomerId());
             dbAddress = AddressRepository.getInstance().getByAddressId(dbCustomer.getAddressId());
+
+            jobID.setText(String.format("Kunde: %s %s", dbCustomer.getFirstName(), dbCustomer.getLastName()));
+
         }
-
-       // activeWork.setAufmass(new ArrayList<AufmassArtikel>());
-
-
-/*        //Delete ArticleDatabase
-        deleteArticleDatabase();
-        //Load Article Database
-        addTestRowsToDB();*/
-
-        TextView jobID = (TextView)findViewById(R.id.textViewActiveJob);
-  //      jobID.setText("Kunde: " + activeWork.getJob().getKunde().getVorname() + " " + activeWork.getJob().getKunde().getName());
-
-        TextView Arbeiter = (TextView)findViewById(R.id.chooseArbeiter);
-        TextView Aufmass = (TextView)findViewById(R.id.chooseAufmass);
-        TextView BarcodeButton = (TextView)findViewById(R.id.barcodeScannerButton);
-
 
 
         Arbeiter.setOnClickListener(new View.OnClickListener() {
@@ -157,9 +158,9 @@ public class JobActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 // Create fragment and give it an argument specifying the article it should show
-                AufmassFragement newFragment = AufmassFragement.newInstance(JobActivity.this);
+                TaskArticleFragement newFragment = TaskArticleFragement.newInstance(JobActivity.this);
                 Bundle args = new Bundle();
-                //args.putInt(AufmassFragement.ARG_POSITION, position); NOT NEEDED NOW EITHER
+                //args.putInt(TaskArticleFragement.ARG_POSITION, position); NOT NEEDED NOW EITHER
                 newFragment.setArguments(args);
 
 
@@ -183,17 +184,14 @@ public class JobActivity extends AppCompatActivity
                 IntentIntegrator integrator = new IntentIntegrator(JobActivity.this);
                 integrator.initiateScan();
 
-                TextView aufmassBtn = (TextView)findViewById(R.id.chooseAufmass);
+                TextView aufmassBtn = (TextView) findViewById(R.id.chooseAufmass);
                 aufmassBtn.performClick();
             }
         });
 
 
-
-
-        if(findViewById(R.id.fragment_container) != null)
-        {
-            if(savedInstanceState != null){
+        if (findViewById(R.id.fragment_container) != null) {
+            if (savedInstanceState != null) {
                 return;//seems strange - maybe a break?
             }
 
@@ -214,88 +212,47 @@ public class JobActivity extends AppCompatActivity
     }
 
 
-  /*  private void addTestRowsToDB()
-    {
-        DBAdapter db = DBAdapter.getsInstance(getApplicationContext());
-        db.open();
-        db.insertArtikelDatenRow("Paulaner Hefe Weißbier Naturtrüb rüb rübrübrübrübrübrübrübrüb rübrübrübrübrübrübrübrübrübrübrübrüb","4066600641964","Flaschen","(1Stk.)");
-        db.insertArtikelDatenRow("Augustiner Edelstoff","4105250024007","Flaschen","(1Stk.)");
-        db.insertArtikelDatenRow("Tegernsee Spezial Kasten","4016931051420","Kasten","(20Fl.)");
-        db.insertArtikelDatenRow("Oettinger Hell Kasten","4014086910319","Kasten","(20Fl.)");
-        db.close();
-    }
-
-    private void deleteArticleDatabase()
-    {
-        DBAdapter db = DBAdapter.getsInstance(getApplicationContext());
-        db.open();
-        db.deleteAll();
-        db.close();
-    }*/
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
-       /* IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
+       IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
         if(resultCode != 0){
             boolean articleFound = false;
-            Context ctx = getApplicationContext();
 
             String re = scanResult.getContents();
-            //Toast toast = Toast.makeText(ctx, re, Toast.LENGTH_SHORT);
             //toast.show();
             Log.d("Barcode", re);
             lastScan = re;
 
-            DBAdapter db = DBAdapter.getsInstance(ctx);
-            db.open();
-
-            Cursor cursor = db.getArtikelDatenRow(lastScan);
-            try {
-                do {
-                    if((cursor == null) || (cursor.getCount() == 0))
-                        break;
-
-                    String name = cursor.getString(2);
-                    String barcode = cursor.getString(3);
-                    String einheit = cursor.getString(4);
-                    String stdVPE = cursor.getString(1);
-
-
-
-                    activeWork.addArtikelToAufmass(new Artikel(barcode,stdVPE,name,einheit), 1);//TODO: ADD ANZAHL PICKER
-                    articleFound = true;
-                }while(cursor.moveToNext());
-
-            } finally {
-                cursor.close();
+            DBArticle article = ArticleRepository.getInstance().getByBarcode(re);
+            if(null != article){
+                DBTaskArticle dbTaskArticle = new DBTaskArticle();
+                dbTaskArticle.setSync(false);
+                dbTaskArticle.setAmount((long) article.getMinOrderAmount());
+                dbTaskArticle.setTaskId(taskId);
+                dbTaskArticle.setArticleId(article.getArticleId());
+                TaskArticleRepository.getInstance().create(dbTaskArticle);
+             Toast.makeText(this,  String.format("Article %s (%s) added to task",article.getName(),re), Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(this, String.format("Article with barcode %s not found",re), Toast.LENGTH_SHORT).show();
             }
 
-            if(!articleFound)
-            {
-                Log.d("Barcode","Article not found in Database!");
-                int duration = Toast.LENGTH_LONG;
-
-                Toast toast = Toast.makeText(ctx, getResources().getString(R.string.article_not_found), duration);
-                toast.setGravity(Gravity.CENTER,0,0);
-                toast.show();
-            }
-            db.close();
         }else{
             Log.d("Barcode", "Nothing scanned");
-        }*/
+            Toast.makeText(this, "Error scanning barcode", Toast.LENGTH_SHORT).show();
+
+        }
     }
 
-  //  public ArrayList<AufmassArtikel> getAufmassList() {
-    //    return activeWork.getAufmass();
- //   }
-   // public ArrayList<Arbeitszeit> getArbeitszeitList() { return activeWork.getWorkedHours(); }
+    public List<DBTaskArticle> getAufmassList() {
+        return TaskArticleRepository.getInstance().getByTaskId(taskId);
+    }
+
 
     //SAME LISTENER FOR BOTH FRAGMENTS!?
     @Override
     public void onFragmentInteraction(Uri uri) {
 
     }
-
 
 
     @Override
@@ -307,12 +264,10 @@ public class JobActivity extends AppCompatActivity
     public void newFragmentCreated(View fragmentView) {
     }
 
-    public void toogleWorkingPosition(int position)
-    {
-        if(workingPositions.contains(position))
-        {
+    public void toogleWorkingPosition(int position) {
+        if (workingPositions.contains(position)) {
             workingPositions.remove(workingPositions.indexOf(position));
-        }else{
+        } else {
             workingPositions.add(position);
         }
 

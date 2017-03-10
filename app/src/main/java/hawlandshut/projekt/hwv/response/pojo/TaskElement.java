@@ -1,6 +1,9 @@
 package hawlandshut.projekt.hwv.response.pojo;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import hawlandshut.projekt.hwv.response.enums.TaskState;
 
 /**
@@ -10,6 +13,8 @@ public class TaskElement {
     private Long taskId;
     private TaskState state;
     private String description;
+    private List<WorkTimeElement> workTimes = new ArrayList<>();
+    private  List<TaskArticleElement> usedArticles  = new ArrayList<>();
     private CustomerElement customer;
 
     public Long getTaskId() {
@@ -36,6 +41,22 @@ public class TaskElement {
         this.description = description;
     }
 
+    public List<WorkTimeElement> getWorkTimes() {
+        return workTimes;
+    }
+
+    public void setWorkTimes(List<WorkTimeElement> workTimes) {
+        this.workTimes = workTimes;
+    }
+
+    public List<TaskArticleElement> getUsedArticles() {
+        return usedArticles;
+    }
+
+    public void setUsedArticles(List<TaskArticleElement> usedArticles) {
+        this.usedArticles = usedArticles;
+    }
+
     public CustomerElement getCustomer() {
         return customer;
     }
@@ -43,4 +64,5 @@ public class TaskElement {
     public void setCustomer(CustomerElement customer) {
         this.customer = customer;
     }
+
 }

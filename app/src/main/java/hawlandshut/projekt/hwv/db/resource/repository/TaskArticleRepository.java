@@ -1,5 +1,7 @@
 package hawlandshut.projekt.hwv.db.resource.repository;
 
+import java.util.List;
+
 import hawlandshut.projekt.hwv.db.helper.BaseRepository;
 import hawlandshut.projekt.hwv.db.resource.enitiy.DBTaskArticle;
 
@@ -22,4 +24,12 @@ public class TaskArticleRepository extends BaseRepository<DBTaskArticle> {
         super(DBTaskArticle.class);
     }
 
+    public void deleteAllSync() {
+        this.getWriteableDatabase().delete(this.tableName,"sync=?",new String[]{"true"});
+    }
+
+    public List<DBTaskArticle> getByTaskId(Long taskId) {
+        return this.transform(this.getReadableDatabase().rawQuery("SELECT * FROM " + this.tableName + " WHERE task_id=?", new String[]{Long.toString(taskId)}));
+
+    }
 }

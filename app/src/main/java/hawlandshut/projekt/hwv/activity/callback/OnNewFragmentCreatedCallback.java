@@ -1,4 +1,4 @@
-package hawlandshut.projekt.hwv;
+package hawlandshut.projekt.hwv.activity.callback;
 
 import android.view.View;
 

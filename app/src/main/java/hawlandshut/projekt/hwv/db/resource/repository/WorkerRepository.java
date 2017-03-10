@@ -3,13 +3,13 @@ package hawlandshut.projekt.hwv.db.resource.repository;
 import java.util.List;
 
 import hawlandshut.projekt.hwv.db.helper.BaseRepository;
-import hawlandshut.projekt.hwv.db.resource.enitiy.DBTask;
+import hawlandshut.projekt.hwv.db.resource.enitiy.DBWorker;
 
 /**
  * Created by Mansi on 07.03.2017.
  */
 
-public class WorkerRepository extends BaseRepository<DBTask> {
+public class WorkerRepository extends BaseRepository<DBWorker> {
     private static WorkerRepository instance = null;
 
     public static WorkerRepository getInstance() {
@@ -21,16 +21,16 @@ public class WorkerRepository extends BaseRepository<DBTask> {
     }
 
     private WorkerRepository() {
-        super(DBTask.class);
+        super(DBWorker.class);
     }
 
-    public DBTask getByWorkerId(Long taskId) {
-        List<DBTask> dbTasks = this.transform(this.getReadableDatabase().rawQuery("SELECT * FROM " + this.tableName + " WHERE task_id=?", new String[]{Long.toString(taskId)}));
-        if (dbTasks.isEmpty()) {
+
+    public DBWorker getByWorkerId(Long workerId) {
+        List<DBWorker> workers = this.transform(this.getReadableDatabase().rawQuery("SELECT * FROM " + this.tableName + " WHERE worker_id=?", new String[]{Long.toString(workerId)}));
+        if (workers.isEmpty()) {
             return null;
         }
 
-        return dbTasks.get(0);
+        return workers.get(0);
     }
-
 }

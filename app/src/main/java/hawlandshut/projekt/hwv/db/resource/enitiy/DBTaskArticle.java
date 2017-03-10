@@ -17,10 +17,22 @@ public class DBTaskArticle extends DBBase {
     private Long id;
     @Column(name = "task_article_id")
     private Long taskArticleId;
-    @Column(name = "article_id",nullable = false)
+    @Column(name = "article_id", nullable = false)
     private Long articleId;
-    @Column(name = "task_id",nullable = false)
+    @Column(name = "task_id", nullable = false)
     private Long taskId;
+    @Column(name = "amoount", nullable = false)
+    private Long amount;
+    @Column(name = "sync", nullable = false)
+    private Boolean sync;
+
+    public Boolean isSync() {
+        return sync;
+    }
+
+    public void setSync(Boolean sync) {
+        this.sync = sync;
+    }
 
     public Long getId() {
         return id;
@@ -52,5 +64,13 @@ public class DBTaskArticle extends DBBase {
 
     public void setTaskId(Long taskId) {
         this.taskId = taskId;
+    }
+
+    public Long getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Long amount) {
+        this.amount = amount;
     }
 }

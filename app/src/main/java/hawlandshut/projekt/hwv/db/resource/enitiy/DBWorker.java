@@ -10,17 +10,26 @@ import hawlandshut.projekt.hwv.db.helper.annotation.Table;
  */
 
 @Table(name = "worker")
-
 public class DBWorker extends DBBase {
     @PrimaryKey
     @Column(name = "id")
     private Long id;
-    @Column(name = "first_name")
+    @Column(name = "worker_id",nullable = false)
+    private Long workerId;
+    @Column(name = "first_name",nullable = false)
     private String firstName;
-    @Column(name = "last_name")
+    @Column(name = "last_name",nullable = false)
     private String lastName;
     @Column(name = "alias")
     private String alias;
+
+    public Long getWorkerId() {
+        return workerId;
+    }
+
+    public void setWorkerId(Long workerId) {
+        this.workerId = workerId;
+    }
 
     public Long getId() {
         return id;

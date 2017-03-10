@@ -1,4 +1,4 @@
-package hawlandshut.projekt.hwv;
+package hawlandshut.projekt.hwv.adpater;
 
 import android.app.Activity;
 import android.content.Context;
@@ -10,47 +10,54 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import hawlandshut.projekt.hwv.activity.JobActivity;
+import hawlandshut.projekt.hwv.R;
+import hawlandshut.projekt.hwv.activity.Variables;
+import hawlandshut.projekt.hwv.db.resource.enitiy.DBArticle;
+import hawlandshut.projekt.hwv.db.resource.enitiy.DBTaskArticle;
+import hawlandshut.projekt.hwv.db.resource.repository.ArticleRepository;
 
-public class ListAdapterAufmass extends BaseAdapter{
+public class ListTaskArticleAdapter extends BaseAdapter{
 
-    private ArrayList<AufmassArtikel> aufmassList;
+    private List<DBTaskArticle> dbTaskArticles;
     private final Context ctx;
     private final Activity mainActivity;
     private final LayoutInflater mInflater;
+    private Long taskId;
 
     private SharedPreferences prefs;
 
-    public ListAdapterAufmass(Context context, Activity act) {
+    public ListTaskArticleAdapter(Context context, Activity act) {
         ctx = context;
         mainActivity = act;
         mInflater = LayoutInflater.from(ctx);
         prefs = ctx.getSharedPreferences("hawlandshut.projekt.hwv", Context.MODE_PRIVATE);
+        taskId = prefs.getLong(Variables.ACTIVE_TASK_ID,-1);
 
         initAufmassListe();
     }
 
-    public void setAufmassList(ArrayList<AufmassArtikel> _newAufmass){
+    public void setAufmassList(List<DBTaskArticle> _newAufmass){
 
         if(_newAufmass != null)
-            aufmassList = _newAufmass;
+            dbTaskArticles = _newAufmass;
     }
 
     private void initAufmassListe(){
-        aufmassList = new ArrayList<>();
+        dbTaskArticles = new ArrayList<>();
     }
 
 
 
     @Override
     public int getCount() {
-        return aufmassList.size();
+        return dbTaskArticles.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return aufmassList.get(position);
+        return dbTaskArticles.get(position);
     }
 
     @Override
@@ -68,25 +75,17 @@ public class ListAdapterAufmass extends BaseAdapter{
         TextView anzahl = (TextView)v.findViewById(R.id.aufmassRow_Anzahl_textView);
 
 
-        if(aufmassList != null)
+        if(dbTaskArticles != null)
         {
-            artname.setText(aufmassList.get(position).getArtikel().getName());
-            barcode.setText(aufmassList.get(position).getArtikel().getBarcodeId());
-            stdvpe.setText(aufmassList.get(position).getArtikel().getMinOrderAmount());
-            einheit.setText(aufmassList.get(position).getArtikel().getUnit().getName());
-            anzahl.setText(String.format("%d",aufmassList.get(position).getAnzahl()));
-        }else if( ((JobActivity)mainActivity).getAufmassList() != null)//TODO: DELETE OR MERGE
-        {
-            ArrayList<AufmassArtikel> aufmassList2= ((JobActivity)mainActivity).getAufmassList();
-            artname.setText(aufmassList2.get(position).getArtikel().getName());
-            barcode.setText(aufmassList2.get(position).getArtikel().getBarcodeId());
-            stdvpe.setText(aufmassList2.get(position).getArtikel().getMinOrderAmount());
-            einheit.setText(aufmassList2.get(position).getArtikel().getUnit().getName());
-            anzahl.setText(aufmassList2.get(position).getAnzahl());
+
+            DBTaskArticle dbTaskArticle = dbTaskArticles.get(position);
+            DBArticle article = ArticleRepository.getInstance().getByArticleId(dbTaskArticle.getArticleId());
+            artname.setText(article.getName());
+            barcode.setText(article.getBarcodeId());
+            stdvpe.setText(Integer.toString(article.getMinOrderAmount()));
+            einheit.setText(article.getUnit().getName());
+            anzahl.setText(Long.toString(dbTaskArticle.getAmount()));
         }
-
-
-
         return v;
     }
 

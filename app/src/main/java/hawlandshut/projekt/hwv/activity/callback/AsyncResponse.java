@@ -1,4 +1,4 @@
-package hawlandshut.projekt.hwv;
+package hawlandshut.projekt.hwv.activity.callback;
 
 /**
  * Created by matth on 12.01.2016.

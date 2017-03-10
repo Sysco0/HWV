@@ -35,8 +35,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
 
-import hawlandshut.projekt.hwv.AsyncResponse;
 import hawlandshut.projekt.hwv.R;
+import hawlandshut.projekt.hwv.activity.callback.AsyncResponse;
 import hawlandshut.projekt.hwv.adpater.ListTaskAdapter;
 import hawlandshut.projekt.hwv.db.helper.DBHelper;
 import hawlandshut.projekt.hwv.db.resource.enitiy.DBAddress;
@@ -44,19 +44,31 @@ import hawlandshut.projekt.hwv.db.resource.enitiy.DBArticle;
 import hawlandshut.projekt.hwv.db.resource.enitiy.DBCustomer;
 import hawlandshut.projekt.hwv.db.resource.enitiy.DBTask;
 import hawlandshut.projekt.hwv.db.resource.enitiy.DBTaskArticle;
+import hawlandshut.projekt.hwv.db.resource.enitiy.DBTaskWorker;
+import hawlandshut.projekt.hwv.db.resource.enitiy.DBWorker;
 import hawlandshut.projekt.hwv.db.resource.repository.AddressRepository;
 import hawlandshut.projekt.hwv.db.resource.repository.ArticleRepository;
 import hawlandshut.projekt.hwv.db.resource.repository.CustomerRepository;
+import hawlandshut.projekt.hwv.db.resource.repository.TaskArticleRepository;
 import hawlandshut.projekt.hwv.db.resource.repository.TaskRepository;
+import hawlandshut.projekt.hwv.db.resource.repository.TaskWorkerRepository;
+import hawlandshut.projekt.hwv.db.resource.repository.WorkerRepository;
 import hawlandshut.projekt.hwv.enums.Gender;
 import hawlandshut.projekt.hwv.response.ArticleResponse;
 import hawlandshut.projekt.hwv.response.TaskResponse;
+import hawlandshut.projekt.hwv.response.WorkerResponse;
 import hawlandshut.projekt.hwv.response.convert.AddressConverter;
 import hawlandshut.projekt.hwv.response.convert.ArticleConverter;
 import hawlandshut.projekt.hwv.response.convert.CustomerConverter;
+import hawlandshut.projekt.hwv.response.convert.TaskArticleConverter;
 import hawlandshut.projekt.hwv.response.convert.TaskConverter;
+import hawlandshut.projekt.hwv.response.convert.TaskWorkerConverter;
+import hawlandshut.projekt.hwv.response.convert.WorkerConverter;
 import hawlandshut.projekt.hwv.response.pojo.ArticleElement;
+import hawlandshut.projekt.hwv.response.pojo.TaskArticleElement;
 import hawlandshut.projekt.hwv.response.pojo.TaskElement;
+import hawlandshut.projekt.hwv.response.pojo.WorkTimeElement;
+import hawlandshut.projekt.hwv.response.pojo.WorkerElement;
 import hawlandshut.projekt.hwv.util.StringUtil;
 
 
@@ -91,21 +103,24 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse<Lis
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         LocalBroadcastManager.getInstance(this)
                 .registerReceiver(mMessageReceiver,
                         new IntentFilter("hwv-notify"));
 
         context = this;
-       // Initialize database connection
+        // Initialize database connection
         DBHelper.getInstance(this.getApplicationContext(), "HWV_DB")
-                .addResources(DBArticle.class)
-                .addResources(DBTask.class)
-                .addResources(DBCustomer.class)
                 .addResources(DBAddress.class)
-                .addResources(DBTaskArticle.class);
+                .addResources(DBArticle.class)
+                .addResources(DBCustomer.class)
+                .addResources(DBTask.class)
+                .addResources(DBTaskArticle.class)
+                .addResources(DBTaskWorker.class)
+                .addResources(DBWorker.class);
 
         //Download stuff
-        new JSONDataUpdater<>(this).execute();
+        new JSONDataUpdater(this).execute();
         //Load shared preferences
         sharedPref = getSharedPreferences(Variables.SHARED_PREFERENCES, Context.MODE_PRIVATE);
 
@@ -139,7 +154,6 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse<Lis
         if (myBar != null) {
             myBar.setTitle(Html.fromHtml("<b><font color='#FFFFFF'>Auftragsliste</font></b>"));
         }
-        super.onCreate(savedInstanceState);
     }
 
     @Override
@@ -157,9 +171,16 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse<Lis
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-         if (id == R.id.action_refresh) {
-             return true;
-         }
+        if (id == R.id.action_refresh) {
+            final MainActivity mainActivity = this;
+            new JSONDataUpdater(new AsyncResponse<List<DBTask>>() {
+                @Override
+                public void processFinish(List<DBTask> output) {
+                    mainActivity.processFinish(output);
+                }
+            }).execute();
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -187,8 +208,7 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse<Lis
         DBCustomer dbCustomer = CustomerRepository.getInstance().getByCustomerId(task.getCustomerId());
         DBAddress dbAddress = AddressRepository.getInstance().getByAddressId(dbCustomer.getAddressId());
 
-        if(task != null)
-        {
+        if (task != null) {
             Button startJobButton = (Button) findViewById(R.id.startJobButton);
             startJobButton.setEnabled(true);
         }
@@ -208,13 +228,12 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse<Lis
     }
 
 
+    public class JSONDataUpdater extends AsyncTask<String, String, Boolean> {
 
-    public class JSONDataUpdater<T> extends AsyncTask<String, String, Boolean> {
-
-        private final AsyncResponse<T> delegate;
+        private final AsyncResponse<List<DBTask>> delegate;
         private final Gson jsonParser = new Gson();
 
-        JSONDataUpdater(AsyncResponse<T> delegate) {
+        JSONDataUpdater(AsyncResponse<List<DBTask>> delegate) {
             this.delegate = delegate;
         }
 
@@ -224,31 +243,67 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse<Lis
             CustomerRepository customerRepository = CustomerRepository.getInstance();
             AddressRepository addressRepository = AddressRepository.getInstance();
             ArticleRepository articleRepository = ArticleRepository.getInstance();
+            TaskArticleRepository taskArticleRepository = TaskArticleRepository.getInstance();
+            TaskWorkerRepository taskWorkerRepository = TaskWorkerRepository.getInstance();
+            WorkerRepository workerRepository = WorkerRepository.getInstance();
 
             try {
+                List<DBTaskArticle> taskarticle = taskArticleRepository.list();
+                for (DBTaskArticle dbTaskArticle : taskarticle) {
+                    if (!dbTaskArticle.isSync()) {
+                        getJson(String.format("https://hwv.mad2man.com/api/article/used?articleId=%d&taskId=%d&amount=%d&",
+                                dbTaskArticle.getArticleId(), dbTaskArticle.getTaskId(), dbTaskArticle.getAmount()));
+                        taskArticleRepository.delete(dbTaskArticle.getId());
+                    }
+                }
+                List<DBTaskWorker> dbTaskWorkers = taskWorkerRepository.list();
+                for (DBTaskWorker dbTaskWorker : dbTaskWorkers) {
+                    if (!dbTaskWorker.isSync()) {
+                        getJson(String.format("https://hwv.mad2man.com/api/work/time?workerId=%d&taskId=%d&startTime=%d&endTime=%d&",
+                                dbTaskWorker.getWorkerId(), dbTaskWorker.getTaskId(), dbTaskWorker.getStartTime(), dbTaskWorker.getEndTime()));
+                        taskWorkerRepository.delete(dbTaskWorker.getId());
+                    }
+                }
+
                 String jsonTaskResponse = getJson("https://hwv.mad2man.com/api/task");
                 String jsonArticleResponse = getJson("https://hwv.mad2man.com/api/article");
+                String jsonDBWorker = getJson("https://hwv.mad2man.com/api/worker");
 
                 TaskResponse taskResponse = jsonParser.fromJson(jsonTaskResponse, TaskResponse.class);
                 ArticleResponse articleResponse = jsonParser.fromJson(jsonArticleResponse, ArticleResponse.class);
-
-                if (taskResponse.isSuccess() && articleResponse.isSuccess()) {
+                WorkerResponse workerResponse = jsonParser.fromJson(jsonDBWorker, WorkerResponse.class);
+                if (taskResponse.isSuccess() && articleResponse.isSuccess() && workerResponse.isSuccess()) {
 
                     //delete not needed data here
                     taskRepository.deleteAll();
                     customerRepository.deleteAll();
                     addressRepository.deleteAll();
                     articleRepository.deleteAll();
-
+                    workerRepository.deleteAll();
+                    taskArticleRepository.deleteAllSync();
+                    taskWorkerRepository.deleteAllSync();
                     //save to database
                     for (TaskElement task : taskResponse.getTasks()) {
                         taskRepository.create(TaskConverter.convert(task));
                         customerRepository.create(CustomerConverter.convert(task.getCustomer()));
                         addressRepository.create(AddressConverter.convert(task.getCustomer().getAddress()));
+                        if (null != task.getUsedArticles() && !task.getUsedArticles().isEmpty()) {
+                            for (TaskArticleElement taskArticleElement : task.getUsedArticles()) {
+                                taskArticleRepository.create(TaskArticleConverter.convert(taskArticleElement, task.getTaskId(), true));
+                            }
+                        }
+                        if (null != task.getWorkTimes() && !task.getWorkTimes().isEmpty()) {
+                            for (WorkTimeElement workTimeElement : task.getWorkTimes()) {
+                                taskWorkerRepository.create(TaskWorkerConverter.convert(workTimeElement, task.getTaskId(), true));
+                            }
+                        }
                     }
 
                     for (ArticleElement article : articleResponse.getArticles()) {
                         articleRepository.create(ArticleConverter.convert(article));
+                    }
+                    for (WorkerElement workerElement : workerResponse.getWorker()) {
+                        workerRepository.create(WorkerConverter.convert(workerElement));
                     }
                 }
 
@@ -260,6 +315,10 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse<Lis
             return true;
         }
 
+        @Override
+        protected void onPostExecute(Boolean result) {
+            delegate.processFinish(TaskRepository.getInstance().list());
+        }
 
         private String getJson(String strUrl) throws IOException {
             StringBuilder result = new StringBuilder();
@@ -281,7 +340,7 @@ public class MainActivity extends AppCompatActivity implements AsyncResponse<Lis
             @Override
             public void onReceive(Context context, Intent intent) {
                 // Extract data included in the Intent
-                int yourInteger = intent.getIntExtra("message",-1/*default value*/);
+                int yourInteger = intent.getIntExtra("message", -1/*default value*/);
             }
         };
 

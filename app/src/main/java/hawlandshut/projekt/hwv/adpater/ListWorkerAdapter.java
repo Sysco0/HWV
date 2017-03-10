@@ -1,4 +1,4 @@
-package hawlandshut.projekt.hwv;
+package hawlandshut.projekt.hwv.adpater;
 
 import android.app.Activity;
 import android.content.Context;
@@ -10,12 +10,16 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import hawlandshut.projekt.hwv.R;
 import hawlandshut.projekt.hwv.activity.JobActivity;
+import hawlandshut.projekt.hwv.db.resource.enitiy.DBWorker;
+import hawlandshut.projekt.hwv.db.resource.repository.WorkerRepository;
 
-public class ListAdapterArbeiter extends BaseAdapter{
+public class ListWorkerAdapter extends BaseAdapter{
 
-    private ArrayList<Mitarbeiter> workerList;
+    private List<DBWorker> workerList;
     private final Context ctx;
     private final Activity mainActivity;
     private final LayoutInflater mInflater;
@@ -27,7 +31,7 @@ public class ListAdapterArbeiter extends BaseAdapter{
     private ArrayList<Integer> workingPositions = new ArrayList<>();
     private SharedPreferences prefs;
 
-    public ListAdapterArbeiter(Context context, Activity act) {
+    public ListWorkerAdapter(Context context, Activity act) {
         ctx = context;
         mainActivity = act;
         mInflater = LayoutInflater.from(ctx);
@@ -36,19 +40,8 @@ public class ListAdapterArbeiter extends BaseAdapter{
     }
 
     public void updateData(){
-        workerList = new ArrayList<>();
-        workerList.add(new Mitarbeiter(1,"Sepp","Herberger","SeppH"));
-        workerList.add(new Mitarbeiter(2,"Hans","Dämpfinger","HansD"));
-        workerList.add(new Mitarbeiter(3,"Josef","Vollgereat","JosefV"));
-        workerList.add(new Mitarbeiter(4,"No","Oana","NoO"));
-        workerList.add(new Mitarbeiter(5,"Sepp","Herberger","SeppH"));
-        workerList.add(new Mitarbeiter(6,"Hans","Dämpfinger","HansD"));
-        workerList.add(new Mitarbeiter(7,"Josef","Vollgereat","JosefV"));
-        workerList.add(new Mitarbeiter(8,"No","Oana","NoO"));
-        workerList.add(new Mitarbeiter(9,"Sepp","Herberger","SeppH"));
-        workerList.add(new Mitarbeiter(10,"Hans","Dämpfinger","HansD"));
-        workerList.add(new Mitarbeiter(11,"Josef","Vollgereat","JosefV"));
-        workerList.add(new Mitarbeiter(12,"No","Oana","NoO"));
+        workerList = WorkerRepository.getInstance().list();
+
 
     }
 
@@ -81,9 +74,11 @@ public class ListAdapterArbeiter extends BaseAdapter{
         TextView id = (TextView)v.findViewById(R.id.workerrow_id_textView);
 
 
-        nachn.setText(workerList.get(position).getName());
-        vorn.setText(workerList.get(position).getVorname());
-        String statusText = "ID: "+ workerList.get(position).getId();
+        DBWorker worker = workerList.get(position);
+
+        nachn.setText(worker.getFirstName());
+        vorn.setText(worker.getLastName());
+        String statusText = "ID: "+ worker.getWorkerId();
         id.setText(statusText);
 
         workingPositions = ((JobActivity)mainActivity).getWorkingPositions();

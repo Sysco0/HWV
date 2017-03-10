@@ -15,13 +15,28 @@ public class DBTaskWorker extends DBBase {
     @Column(name = "id")
     private Long id;
     @Column(name = "task_worker_id")
-    private Long taskArticleId;
-    @Column(name = "worker_id",nullable = false)
+    private Long taskWorkerId;
+    @Column(name = "worker_id", nullable = false)
     private Long workerId;
-    @Column(name = "task_id",nullable = false)
+    @Column(name = "task_id", nullable = false)
     private Long taskId;
+    @Column(name = "start_time", nullable = false)
+    private Long startTime;
+    @Column(name = "end_time", nullable = false)
+    private Long endTime;
+    @Column(name = "sync", nullable = false)
+    private Boolean sync;
+
+    public Boolean isSync() {
+        return sync;
+    }
+
+    public void setSync(Boolean sync) {
+        this.sync = sync;
+    }
 
     public Long getId() {
+
         return id;
     }
 
@@ -29,12 +44,12 @@ public class DBTaskWorker extends DBBase {
         this.id = id;
     }
 
-    public Long getTaskArticleId() {
-        return taskArticleId;
+    public Long getTaskWorkerId() {
+        return taskWorkerId;
     }
 
-    public void setTaskArticleId(Long taskArticleId) {
-        this.taskArticleId = taskArticleId;
+    public void setTaskWorkerId(Long taskWorkerId) {
+        this.taskWorkerId = taskWorkerId;
     }
 
     public Long getWorkerId() {
@@ -51,5 +66,21 @@ public class DBTaskWorker extends DBBase {
 
     public void setTaskId(Long taskId) {
         this.taskId = taskId;
+    }
+
+    public Long getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Long startTime) {
+        this.startTime = startTime;
+    }
+
+    public Long getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Long endTime) {
+        this.endTime = endTime;
     }
 }

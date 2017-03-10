@@ -10,11 +10,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import hawlandshut.projekt.hwv.ListAdapterArbeiter;
-import hawlandshut.projekt.hwv.ListAdapterArbeitszeit;
-import hawlandshut.projekt.hwv.Mitarbeiter;
 import hawlandshut.projekt.hwv.R;
 import hawlandshut.projekt.hwv.activity.JobActivity;
+import hawlandshut.projekt.hwv.adpater.ListWorkeRangeAdapter;
+import hawlandshut.projekt.hwv.adpater.ListWorkerAdapter;
+import hawlandshut.projekt.hwv.db.resource.enitiy.DBWorker;
 
 
 /**
@@ -51,25 +51,25 @@ public class ChooseWorkerFragment extends Fragment {
         View workerChooseView = inflater.inflate(R.layout.fragment_choose_worker, container, false);
 
         ListView workerListView = (ListView)workerChooseView.findViewById(R.id.workerList);
-        ListAdapterArbeiter arbeiter = new ListAdapterArbeiter(getContext(),getActivity());
+        ListWorkerAdapter arbeiter = new ListWorkerAdapter(getContext(),getActivity());
         workerListView.setAdapter(arbeiter);
         arbeiter.setWorkingPositions(((JobActivity)getActivity()).getWorkingPositions());
         workerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 ((JobActivity)getActivity()).toogleWorkingPosition(position);//setSelectedItem(position);
-                ((ListAdapterArbeiter) parent.getAdapter()).setWorkingPositions(((JobActivity)getActivity()).getWorkingPositions());
-                ((ListAdapterArbeiter) parent.getAdapter()).notifyDataSetChanged();
+                ((ListWorkerAdapter) parent.getAdapter()).setWorkingPositions(((JobActivity)getActivity()).getWorkingPositions());
+                ((ListWorkerAdapter) parent.getAdapter()).notifyDataSetChanged();
 
-                Mitarbeiter aktiv = (Mitarbeiter)((ListAdapterArbeiter) parent.getAdapter()).getItem((position));
-                ((JobActivity)getActivity()).toggleWorker(aktiv);
+                DBWorker aktiv = (DBWorker)((ListWorkerAdapter) parent.getAdapter()).getItem((position));
+               ((JobActivity)getActivity()).toggleWorker(aktiv);
             }
         });
 
         ListView az = (ListView)workerChooseView.findViewById(R.id.recordedWork);
-        ListAdapterArbeitszeit work = new ListAdapterArbeitszeit(getContext(),getActivity());
+        ListWorkeRangeAdapter work = new ListWorkeRangeAdapter(getContext(),getActivity());
         az.setAdapter(work);
-        work.setArbeitszeitList(((JobActivity)getActivity()).getArbeitszeitList());
+       // work. (((JobActivity)getActivity()).getArbeitszeitList());
         work.notifyDataSetChanged();
         //OnLongClickListener Delete Row
 
